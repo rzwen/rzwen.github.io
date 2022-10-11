@@ -6,7 +6,7 @@ description: "This is a special web to show the benchmarking result of many inde
 
 # Color settings (hex-codes without the leading hash-tag)
 color:
-  primary-dark: '#f1f1f1'
+  primary-dark: '#000000'
   links: '#219ab3'
 
 # Footer settings
