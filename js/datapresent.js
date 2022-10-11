@@ -29,18 +29,18 @@ function showList(){
 }
 
 function hideOption(){
-    var hidden = document.getElementById("showOptions");
-    hidden.onclick="showList()";
-    hidden.innerText="Show Options";
-    for(let i in new Array(indexList.length).fill(1)){
+    for(let i in new Array(indexList.length).fill(1)){console.log(1);
         let t = document.getElementById(i+"").remove();
     }
+    var hidden = document.getElementById("showOptions");
+    hidden.setAttribute("onclick","showList()");
+    hidden.innerText="Show Option";
 }
 
 function appen(i){
     var old = document.getElementById("indexList");
     let newitem = document.createElement("tr");
-    let element = ' <div style="color: black; display: block;"><input type="checkbox"><label></label></div>';
+    let element = ' <div style="color: black; display: block;"><input type="checkbox" style="height:15px;width:15px"><label></label></div>';
     newitem.id=i+'';
     newitem.innerHTML = element;
     newitem.querySelectorAll("input")[0].id = indexList[i].name; 
@@ -48,7 +48,6 @@ function appen(i){
         newitem.querySelectorAll("input")[0].setAttribute('checked','true');
     }
     newitem.querySelectorAll("label")[0].setAttribute('for',indexList[i].name); 
-    console.log(newitem);
     newitem.querySelector("label").innerText = indexList[i].name;
     old.appendChild(newitem);
     document.querySelector("form").reset();
