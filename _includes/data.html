@@ -1,37 +1,42 @@
 <!-- Download Section -->
-<section id="data" class="content-section text-center" style="text-align: left; color:black; background:white">
-    <h2>data details</h2>
-   <div id="Leaderboard">
-        <h3>Leaderboard</h3>
-        <p>Metric to display by: 
-            <select readonly>
-                <option value="Latency" selected>Latency(ns)</option>
-                <option value="BuildUpTime">BuildUpTime(ns)</option>
-                <option value="Size">Size</option>
-            </select>
-        </p>
-        <p>Select a subset of indexes to display: <button onclick="test()">Show Options</button></p>
-        <p>Quick selections: 
-            <button onclick="test()">All Indexes</button>
-            <button onclick="test()">Read-only Indexes</button>
-            <button onclick="test()">Updatable Indexes</button>
-        </p>
-        <p>
-            Displaying results on datasets:
-            <select readonly>
-                <optgroup label="200mDataset">200m Datasets</optgroup>
-                <optgroup label="64bitDataset">64bit-Datasets</optgroup>
-                <optgroup label="RealWorldDataset">Real-World-Datasets</optgroup>
-                <option>kk</option>
-                <optgroup label="Synthetic">Synthetic Datasets</optgroup>
-            </select>
-        </p>
-        <p>
-            Results below are by model. Click on a header to sort by that measure. Click on an index name to open the relevant GitHub repo.
-        </p>
-        <p>
-            This leaderboard displays the average lookup time for a randomly selected key in a sorted dataset of size 200M.
-            <br>Learned indexes are marked in <b>bold</b>.
-        </p>
-   </div>
+<section id="data" class="content-section text-center" style="text-align: left;">
+    <div class="container">
+        <div class="row">
+            <h2 style="text-align: center;">data details</h2>
+            <div class="col-4"></div>
+            <div class="col-8">
+                <h3>Leaderboard</h3>
+                <p>Metric to display by: 
+                    <select readonly style="color:black">
+                        <option value="Latency" selected>Latency(ns)</option>
+                        <option value="BuildUpTime">BuildUpTime(ns)</option>
+                        <option value="Size">Size</option>
+                    </select>
+                </p>
+                <p>Select a subset of indexes to display: <button onclick="test()" style="color:black">Show Options</button></p>
+                <p>Quick selections: 
+                    <button onclick="test()" style="color:black">All Indexes</button>
+                    <button onclick="test()" style="color:black">Read-only Indexes</button>
+                    <button onclick="test()" style="color:black">Updatable Indexes</button>
+                </p>
+                <p>
+                    Displaying results on datasets:
+                    <select readonly style="color:black">
+                        <optgroup label="---200m Datasets---"></optgroup>
+                        <optgroup label="---64bit-Datasets--"></optgroup>
+                        <optgroup label="Real-World-Datasets"></optgroup>
+                        <option>kk</option>
+                        <optgroup label="Synthetic Datasets"></optgroup>
+                    </select>
+                </p>
+                <p>
+                    Results below are by model. Click on a header to sort by that measure. Click on an index name to open the relevant GitHub repo.
+                </p>
+                <p>
+                    This leaderboard displays the average lookup time for a randomly selected key in a sorted dataset of size 200M.
+                    <br>Learned indexes are marked in <b>bold</b>.
+                </p>
+            </div>
+        </div>
+    </div>
 </section>
