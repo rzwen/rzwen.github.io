@@ -1,7 +1,31 @@
 <!-- Download Section -->
 <section id="data" class="content-section text-center">
+    <h2>data details</h2>
    <div id="Leaderboard">
-        <h2>Leaderboard</h2>
-        <p>Testing.<button onclick="test()">Hil</button></p>
+        <h3>Leaderboard</h3>
+        <p>Metric to display by: 
+            <select>
+                <option readonly>Please Choose</option>
+                <option value="Latency" selected>Latency(ns)</option>
+                <option value="BuildUpTime">BuildUpTime(ns)</option>
+                <option value="Size">Size</option>
+            </select>
+        </p>
+        <p>Select a subset of indexes to display: <button onclick="test()">Show Options</button></p>
+        <p>Quick selections: 
+            <button onclick="test()">All Indexes</button>
+            <button onclick="test()">Read-only Indexes</button>
+            <button onclick="test()">Updatable Indexes</button>
+        </p>
+        <p>
+            Displaying results on datasets:
+            <select>
+                <option readonly>Please Choose</option>
+                <optgroup label="200mDataset">200m Datasets</optgroup>
+                <optgroup label="64bitDataset">64bit-Datasets</optgroup>
+                <optgroup label="RealWorldDataset">Real-World-Datasets</optgroup>
+                <optgroup label="Synthetic">Synthetic Datasets</optgroup>
+            </select>
+        </p>
    </div>
 </section>
