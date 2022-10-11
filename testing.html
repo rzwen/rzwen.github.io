@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <head>
-
+    <script src="/js/datapresent.js"></script>
 </head>
 <body style="color:blue;">
-    <h2>
-        testing
-    </h2>
-        <select readonly>
-            <option value="Latency" selected>Latency(ns)</option>
-            <option value="BuildUpTime">BuildUpTime(ns)</option>
-            <option value="Size">Size</option>
-        </select> 
-        <p>gsa
-        <button onclick="test()">All Indexes</button>
-            <button onclick="test()">Read-only Indexes</button>
-            <button onclick="test()">Updatable Indexes</button></p>
+    <form style="line-height:40px">
+        <tr><div style="color: black; display: block;"><input type="hidden" id="RMI"><label for="RMI">RMI</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="RS"><label for="RS">RS</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="PGM"><label for="PGM">PGM</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="ART"><label for="ART">ART</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="FAST"><label for="FAST">FAST</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="BTree"><label for="BTree">BTree</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="IBTree"><label for="IBTree">IBTree</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="ALEX"><label for="ALEX">ALEX</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="LIPP"><label for="LIPP">LIPP</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="Wormhole"><label for="Wormhole">Wormhole</label></div></tr>
+        <tr><div style="color: black; display: block;"><input type="checkbox" id="RMI"><label for="RMI">RMI</label></div></tr>
+    </form>
+    <button onclick="save()">hhh</button>
+    <button onclick="load()">load</button>
+    <section id="indexList"></section>
 </body>

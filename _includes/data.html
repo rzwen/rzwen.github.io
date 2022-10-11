@@ -13,7 +13,7 @@
                         <option value="Size">Size</option>
                     </select>
                 </p>
-                <p>Select a subset of indexes to display: <button onclick="test()" style="color:black">Show Options</button></p>
+                <p>Select a subset of indexes to display: <button onclick="showList()" style="color:black" id="showOptions">Show Options</button></p>
                 <p>Quick selections: 
                     <button onclick="test()" style="color:black">All Indexes</button>
                     <button onclick="test()" style="color:black">Read-only Indexes</button>
@@ -29,6 +29,7 @@
                         <optgroup label="Synthetic Datasets"></optgroup>
                     </select>
                 </p>
+                <form id="indexList" style="line-height: 40px;"></form>
                 <p>
                     Results below are by model. Click on a header to sort by that measure. Click on an index name to open the relevant GitHub repo.
                 </p>
