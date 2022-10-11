@@ -370,3 +370,11 @@ body {
     color:red;
     background-color: #219ab3;
 }
+
+#data select option{
+    color:red;
+}
+
+#data select optgroup{
+    color:gray;
+}
