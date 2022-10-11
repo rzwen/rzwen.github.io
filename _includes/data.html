@@ -1,5 +1,5 @@
 <!-- Download Section -->
-<section id="data" class="content-section text-center">
+<section id="data" class="content-section text-center" style="text-align: left; color:black; background:white">
     <h2>data details</h2>
    <div id="Leaderboard">
         <h3>Leaderboard</h3>
@@ -18,13 +18,20 @@
         </p>
         <p>
             Displaying results on datasets:
-            <select>
-                <option readonly>Please Choose</option>
+            <select readonly>
                 <optgroup label="200mDataset">200m Datasets</optgroup>
                 <optgroup label="64bitDataset">64bit-Datasets</optgroup>
                 <optgroup label="RealWorldDataset">Real-World-Datasets</optgroup>
+                <option>kk</option>
                 <optgroup label="Synthetic">Synthetic Datasets</optgroup>
             </select>
+        </p>
+        <p>
+            Results below are by model. Click on a header to sort by that measure. Click on an index name to open the relevant GitHub repo.
+        </p>
+        <p>
+            This leaderboard displays the average lookup time for a randomly selected key in a sorted dataset of size 200M.
+            <br>Learned indexes are marked in <b>bold</b>.
         </p>
    </div>
 </section>
