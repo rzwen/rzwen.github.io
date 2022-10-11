@@ -24,7 +24,7 @@ function test(){
 function showList(){
     load();
     var hidden = document.getElementById("showOptions");
-    hidden.onclick="hideOption()";
+    hidden.setAttribute("onclick","hideOption()");
     hidden.innerText="Hide Option";
 }
 
