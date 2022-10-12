@@ -16,23 +16,80 @@ let indexList = [];
 // indexList[13]={'name':'CHT','type':'UPAB','present':'true','site':''};
 // indexList[14]={'name':'CuchooMap','type':'UPAB','present':'true','site':''};
 
-
-function test(){
-    alert("nothing");
-}
-
 function showList(){
     load();
     var hidden = document.getElementById("showOptions");
-    hidden.innerHTML='<button onclick=hideOption()" style="color:black" >Hide Options</button>';
+    hidden.setAttribute("onclick","hideOption()");
+    hidden.innerText="Hide Option";
 }
 
 function hideOption(){
-    for(let i in new Array(indexList.length).fill(1)){console.log(1);
-        let t = document.getElementById(i+"").remove();
+    for(let i in new Array(indexList.length).fill(1)){
+        document.getElementById(i+"").remove();
     }
     var hidden = document.getElementById("showOptions");
-    hidden.innerHTML='<button onclick=showList()" style="color:black" >Show Options</button>';
+    hidden.setAttribute("onclick","showList()");
+    hidden.innerText="Show Option";
+}
+
+function selectAll(){
+    fetch('./data/indexList.txt')
+    .then(res => res.text())
+    .then(txt => {
+        if(indexList.length==0)
+            indexList=indexList.concat(JSON.parse(txt));
+        for(let i in new Array(indexList.length).fill(1)){
+            indexList[i].present="true";
+        }
+        if(document.getElementById("showOptions").innerText=='Hide Option'){
+            for(let i in new Array(indexList.length).fill(1)){
+                document.getElementById(i+"").remove();
+                appen(i);
+            }
+        }
+    });   
+}
+
+function selectUPAB(){
+    fetch('./data/indexList.txt')
+    .then(res => res.text())
+    .then(txt => {
+        if(indexList.length==0)
+            indexList=indexList.concat(JSON.parse(txt));
+        for(let i in new Array(indexList.length).fill(1)){
+            if(indexList[i].type=="UPAB")
+                indexList[i].present="true";
+            else
+                indexList[i].present="false";
+        }
+        if(document.getElementById("showOptions").innerText=='Hide Option'){
+            for(let i in new Array(indexList.length).fill(1)){
+                document.getElementById(i+"").remove();
+                appen(i);
+            }
+        }
+    });
+}
+
+function selectRDON(){
+    fetch('./data/indexList.txt')
+    .then(res => res.text())
+    .then(txt => {
+        if(indexList.length==0)
+            indexList=indexList.concat(JSON.parse(txt));
+        for(let i in new Array(indexList.length).fill(1)){
+            if(indexList[i].type=="RDON")
+                indexList[i].present="true";
+            else
+                indexList[i].present="false";
+        }
+        if(document.getElementById("showOptions").innerText=='Hide Option'){
+            for(let i in new Array(indexList.length).fill(1)){
+                document.getElementById(i+"").remove();
+                appen(i);
+            }
+        }
+    });
 }
 
 function appen(i){
@@ -62,11 +119,8 @@ function load(){
     fetch('./data/indexList.txt')
     .then(res => res.text())
     .then(txt => {
-        for(let i in new Array(indexList.length).fill(1)){
-            let t = document.getElementById(i+"").remove();
-        }
-        indexList=[];
-        indexList=indexList.concat(JSON.parse(txt));
+        if(indexList.length==0)
+            indexList=indexList.concat(JSON.parse(txt));
         for(let i in new Array(indexList.length).fill(1)){
             appen(i);
         }

@@ -13,11 +13,11 @@
                         <option value="Size">Size</option>
                     </select>
                 </p>
-                <p>Select a subset of indexes to display: <div id="showOptions" style="color:black"><button onclick="showList()">Show Options</button></div></p>
+                <p>Select a subset of indexes to display: <button onclick="showList()" style="color:black" id="showOptions">Show Options</button></p>
                 <p>Quick selections: 
-                    <button onclick="test()" style="color:black">All Indexes</button>
-                    <button onclick="test()" style="color:black">Read-only Indexes</button>
-                    <button onclick="test()" style="color:black">Updatable Indexes</button>
+                    <button onclick="selectAll()" style="color:black">All Indexes</button>
+                    <button onclick="selectRDON()" style="color:black">Read-only Indexes</button>
+                    <button onclick="selectUPAB()" style="color:black">Updatable Indexes</button>
                 </p>
                 <p>
                     Displaying results on datasets:
