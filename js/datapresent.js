@@ -24,7 +24,7 @@ function test(){
 function showList(){
     load();
     var hidden = document.getElementById("showOptions");
-    hidden.setAttribute("onclick","hideOption()");
+    hidden.innerHTML='<button onclick=hideOption()" style="color:black" >Hide Options</button>';
     hidden.innerText="Hide Option";
 }
 
@@ -33,7 +33,7 @@ function hideOption(){
         let t = document.getElementById(i+"").remove();
     }
     var hidden = document.getElementById("showOptions");
-    hidden.setAttribute("onclick","showList()");
+    hidden.innerHTML='<button onclick=showList()" style="color:black" >Show Options</button>';
     hidden.innerText="Show Option";
 }
 
