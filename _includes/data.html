@@ -38,6 +38,30 @@
                     <br>Learned indexes are marked in <b>bold</b>.
                     <br>You may Click the col header to reorder according to certain col.
                 </p>
+                <div class="table-wrapper">
+                    <table class="sortable tables" id = "latencyTable">
+                        <thead>
+                            <th><button></button></th>
+                            <th><button onclick="reorder(0)">Index<p>size</p></button></th>
+                            <th><button onclick="reorder(1)">XS<p>Up to 0.01% of data</p></button></th>
+                            <th><button onclick="reorder(2)">S<p>Up to 0.1% of data</p></button></th>
+                            <th><button onclick="reorder(3)">M<p>Up to 1% of data</p></button></th>
+                            <th><button onclick="reorder(4)">L<p>Up to 10% of data</p></button></th>
+                            <th><button onclick="reorder(5)">XL<p>No limit</p></button></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>   
             </div>
         </div>
     </div>
