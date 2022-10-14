@@ -94,7 +94,7 @@ a:focus {
 
 .navbar-custom .nav li.active {
     outline: none;
-    background-color: rgba(255,255,255,.3);
+    background-color: white;
 }
 
 .navbar-custom .nav li a {
@@ -378,4 +378,5 @@ body {
 
 #latencyTable thead th button{
     width:150px;
+    height:60px;
 }
