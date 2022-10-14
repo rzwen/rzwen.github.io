@@ -1,23 +1,10 @@
 // Apply JSON to remember the indexList
 let indexList = [];
-// indexList[0]={'name':'RMI','type':'RDON','present':'true','site':''};
-// indexList[1]={'name':'RS','type':'RDON','present':'true','site':''};
-// indexList[2]={'name':'PGM','type':'UPAB','present':'true','site':''};
-// indexList[3]={'name':'ART','type':'UPAB','present':'true','site':''};
-// indexList[4]={'name':'LIPP','type':'UPAB','present':'true','site':''};
-// indexList[5]={'name':'BTree','type':'UPAB','present':'true','site':''};
-// indexList[6]={'name':'IBTree','type':'UPAB','present':'true','site':''};
-// indexList[7]={'name':'FAST','type':'RDON','present':'true','site':''};
-// indexList[8]={'name':'ALEX','type':'UPAB','present':'true','site':''};
-// indexList[9]={'name':'Wormhole','type':'UPAB','present':'true','site':''};
-// indexList[10]={'name':'RBS','type':'RDON','present':'true','site':''};
-// indexList[11]={'name':'RobinHash','type':'UPAB','present':'true','site':''};
-// indexList[12]={'name':'BinarySearch','type':'UPAB','present':'true','site':''};
-// indexList[13]={'name':'CHT','type':'UPAB','present':'true','site':''};
-// indexList[14]={'name':'CuchooMap','type':'UPAB','present':'true','site':''};
 
 function showList(){
-    load();
+    for(let i in new Array(indexList.length).fill(1)){
+        appen(i);
+    }
     var hidden = document.getElementById("showOptions");
     hidden.setAttribute("onclick","hideOption()");
     hidden.innerText="Hide Option";
@@ -33,69 +20,60 @@ function hideOption(){
 }
 
 function selectAll(){
-    fetch('./data/indexList.txt')
-    .then(res => res.text())
-    .then(txt => {
-        if(indexList.length==0)
-            indexList=indexList.concat(JSON.parse(txt));
+    for(let i in new Array(indexList.length).fill(1)){
+        indexList[i].present="true";
+    }
+    if(document.getElementById("showOptions").innerText=='Hide Option'){
         for(let i in new Array(indexList.length).fill(1)){
-            indexList[i].present="true";
+            document.getElementById(i+"").remove();
+            appen(i);
         }
-        if(document.getElementById("showOptions").innerText=='Hide Option'){
-            for(let i in new Array(indexList.length).fill(1)){
-                document.getElementById(i+"").remove();
-                appen(i);
-            }
-        }
-    });   
+    } 
 }
 
 function selectUPAB(){
-    fetch('./data/indexList.txt')
-    .then(res => res.text())
-    .then(txt => {
-        if(indexList.length==0)
-            indexList=indexList.concat(JSON.parse(txt));
+    for(let i in new Array(indexList.length).fill(1)){
+        if(indexList[i].type=="UPAB")
+            indexList[i].present="true";
+        else
+            indexList[i].present="false";
+    }
+    if(document.getElementById("showOptions").innerText=='Hide Option'){
         for(let i in new Array(indexList.length).fill(1)){
-            if(indexList[i].type=="UPAB")
-                indexList[i].present="true";
-            else
-                indexList[i].present="false";
+            document.getElementById(i+"").remove();
+            appen(i);
         }
-        if(document.getElementById("showOptions").innerText=='Hide Option'){
-            for(let i in new Array(indexList.length).fill(1)){
-                document.getElementById(i+"").remove();
-                appen(i);
-            }
-        }
-    });
+    }
 }
 
 function selectRDON(){
-    fetch('./data/indexList.txt')
-    .then(res => res.text())
-    .then(txt => {
-        if(indexList.length==0)
-            indexList=indexList.concat(JSON.parse(txt));
+    for(let i in new Array(indexList.length).fill(1)){
+        if(indexList[i].type=="RDON")
+            indexList[i].present="true";
+        else
+            indexList[i].present="false";
+    }
+    if(document.getElementById("showOptions").innerText=='Hide Option'){
         for(let i in new Array(indexList.length).fill(1)){
-            if(indexList[i].type=="RDON")
-                indexList[i].present="true";
-            else
-                indexList[i].present="false";
+            document.getElementById(i+"").remove();
+            appen(i);
         }
-        if(document.getElementById("showOptions").innerText=='Hide Option'){
-            for(let i in new Array(indexList.length).fill(1)){
-                document.getElementById(i+"").remove();
-                appen(i);
-            }
-        }
-    });
+    }
+}
+
+function check(i){
+    if(indexList[i].present=="true"){
+        indexList[i].present="false";
+    }
+    else{
+        indexList[i].present="true";
+    }
 }
 
 function appen(i){
     var old = document.getElementById("indexList");
     let newitem = document.createElement("tr");
-    let element = ' <div style="color: black; display: block;"><input type="checkbox" style="height:15px;width:15px"><label></label></div>';
+    let element = ' <div style="color: black; display: block;"><input type="checkbox" style="height:15px;width:15px" onclick="check('+i+')"><label></label></div>';
     newitem.id=i+'';
     newitem.innerHTML = element;
     newitem.querySelectorAll("input")[0].id = indexList[i].name; 
@@ -115,14 +93,19 @@ function save(){
         });
 }
 
-function load(){
+// function load(){
+//     fetch('./data/indexList.txt')
+//     .then(res => res.text())
+//     .then(txt => {
+//         if(indexList.length==0)
+//             indexList=indexList.concat(JSON.parse(txt));
+//         for(let i in new Array(indexList.length).fill(1)){
+//             appen(i);
+//         }
+//     }); 
+// }
+
+window.onload=function(){
     fetch('./data/indexList.txt')
     .then(res => res.text())
-    .then(txt => {
-        if(indexList.length==0)
-            indexList=indexList.concat(JSON.parse(txt));
-        for(let i in new Array(indexList.length).fill(1)){
-            appen(i);
-        }
-    }); 
-}
+    .then(txt => {indexList=indexList.concat(JSON.parse(txt));});}

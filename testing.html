@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <head>
     <script src="/js/datapresent.js"></script>
+    <style>
+        #latencyTable thead th button{
+            width:150px;
+        }
+    </style>
 </head>
 <body style="color:blue;">
     <form style="line-height:40px">
-        <tr><div style="color: black; display: block;"><input type="hidden" id="RMI"><label for="RMI">RMI</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="RS" style="width: 15px; height:15px;"><label for="RS">RS</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="PGM"><label for="PGM">PGM</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="ART"><label for="ART">ART</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="FAST"><label for="FAST">FAST</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="BTree"><label for="BTree">BTree</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="IBTree"><label for="IBTree">IBTree</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="ALEX"><label for="ALEX">ALEX</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="LIPP"><label for="LIPP">LIPP</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="Wormhole"><label for="Wormhole">Wormhole</label></div></tr>
-        <tr><div style="color: black; display: block;"><input type="checkbox" id="RMI"><label for="RMI">RMI</label></div></tr>
     </form>
     <button id="showOptions" onclick="showList()">load</button>
     <button onclick="selectAll()">All</button>
     <button onclick="selectRDON()">RDON</button>
     <button onclick="selectUPAB()">UPAD</button>
     <section id="indexList"></section>
+    <div class="table-wrapper">
+        <table class="sortable tables" id = "latencyTable">
+            <thead>
+                <th><button onclick="reorder(0)">Index<p>size</p></button></th>
+                <th><button onclick="reorder(1)">XS<p>Up to 0.01% of data</p></button></th>
+                <th><button onclick="reorder(2)">S<p>Up to 0.1% of data</p></button></th>
+                <th><button onclick="reorder(3)">M<p>Up to 1% of data</p></button></th>
+                <th><button onclick="reorder(4)">L<p>Up to 10% of data</p></button></th>
+                <th><button onclick="reorder(5)">XL<p>No limit</p></button></th>
+            </thead>
+        </table>
+    </div>      
 </body>

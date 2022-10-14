@@ -375,3 +375,7 @@ body {
 #data select optgroup{
     color:darkgoldenrod;
 }
+
+#latencyTable thead th button{
+    width:150px;
+}
