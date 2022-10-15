@@ -7,27 +7,28 @@
             <div class="col-8">
                 <h3>Leaderboard</h3>
                 <p>Metric to display by: 
-                    <select readonly style="color:black">
+                    <select readonly style="color:black" id="generateStandard">
                         <option value="Latency" selected>Latency(ns)</option>
                         <option value="BuildUpTime">BuildUpTime(ns)</option>
                         <option value="Size">Size</option>
                     </select>
                 </p>
-                <p>Select a subset of indexes to display: <button onclick="showList()" style="color:black" id="showOptions">Show Options</button></p>
-                <p>Quick selections: 
-                    <button onclick="selectAll()" style="color:black">All Indexes</button>
-                    <button onclick="selectRDON()" style="color:black">Read-only Indexes</button>
-                    <button onclick="selectUPAB()" style="color:black">Updatable Indexes</button>
-                </p>
                 <p>
                     Displaying results on datasets:
-                    <select readonly style="color:black">
+                    <select readonly style="color:black" id="dataset">
                         <optgroup label="---200m Datasets---"></optgroup>
                         <optgroup label="---64bit-Datasets--"></optgroup>
                         <optgroup label="Real-World-Datasets"></optgroup>
                         <option>kk</option>
                         <optgroup label="Synthetic Datasets"></optgroup>
                     </select>
+                    <button onclick="generate()">Regenerate</button>
+                </p>
+                <p>Select a subset of indexes to display: <button onclick="showList()" style="color:black" id="showOptions">Show Options</button></p>
+                <p>Quick selections: 
+                    <button onclick="selectAll()" style="color:black">All Indexes</button>
+                    <button onclick="selectRDON()" style="color:black">Read-only Indexes</button>
+                    <button onclick="selectUPAB()" style="color:black">Updatable Indexes</button>
                 </p>
                 <form id="indexList" style="line-height: 40px; background-color: white;"></form>
                 <p>
@@ -36,7 +37,6 @@
                 <p>
                     This leaderboard displays the average lookup time for a randomly selected key in a sorted dataset of size 200M.
                     <br>Learned indexes are marked in <b>bold</b>.
-                    <br>You may Click the col header to reorder according to certain col.
                 </p>
                 <div class="table-wrapper">
                     <table class="sortable tables" id = "latencyTable">
@@ -62,6 +62,7 @@
                         </tbody>
                     </table>
                 </div>   
+                <p>You may Click the col header to reorder according to certain col.</p>
             </div>
         </div>
     </div>
