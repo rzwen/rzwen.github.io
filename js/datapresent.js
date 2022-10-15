@@ -105,7 +105,43 @@ function save(){
 //     }); 
 // }
 
+function newRow1(i,t,k){
+    let res = '<td>Plot<button'
+    if(indexList[i].plot=='true'){
+        res = res + ' onClick="removePlot()">Remove</button></td>';
+    }
+    else{
+        res = res + ' onClick="addPlot()">Add</button></td>';
+    }
+    res = res+'<td><a href='+indexList[i].site+'>'+indexList[i].name+'</a></td>';
+    return res;
+}
+
+function generate(){
+    let t = document.getElementById("generateStandard").value;
+    let k = document.getElementById("dataset").value;
+    let g = document.getElementById("latencyBody");
+    if(g!=null)
+        g.remove();
+    let tbody = document.createElement("tbody");
+    tbody.id="latencyBody";
+    for(let i in new Array(indexList.length).fill(1)){
+        if(indexList[i].present=='true'){
+            let newrow = document.createElement('tr');
+            newrow.innerHTML=newRow1(i,t,k);
+            tbody.appendChild(newrow);
+        }
+    }
+    document.getElementById("latencyTable").appendChild(tbody);
+}
+
+
 window.onload=function(){
     fetch('./data/indexList.txt')
     .then(res => res.text())
-    .then(txt => {indexList=indexList.concat(JSON.parse(txt));});}
+    .then(txt => {
+        indexList=indexList.concat(JSON.parse(txt));
+        generate();
+    }
+    );
+}

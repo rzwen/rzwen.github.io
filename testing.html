@@ -74,4 +74,22 @@
     </div>  
     <div style="background-color: black;">
     <img src="./img/GRE-Header-3.png"></div>    
+    <p>Metric to display by: 
+        <select readonly style="color:black" id="generateStandard">
+            <option value="Latency" selected>Latency(ns)</option>
+            <option value="BuildUpTime">BuildUpTime(ns)</option>
+            <option value="Size">Size</option>
+        </select>
+    </p>
+    <p>
+        Displaying results on datasets:
+        <select readonly style="color:black" id="dataset">
+            <optgroup label="---200m Datasets---"></optgroup>
+            <optgroup label="---64bit-Datasets--"></optgroup>
+            <optgroup label="Real-World-Datasets"></optgroup>
+            <option>kk</option>
+            <optgroup label="Synthetic Datasets"></optgroup>
+        </select>
+        <button onclick="generate()">Regenerate</button>
+    </p>
 </body>

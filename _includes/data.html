@@ -22,8 +22,9 @@
                         <option>kk</option>
                         <optgroup label="Synthetic Datasets"></optgroup>
                     </select>
-                    <button onclick="generate()">Regenerate</button>
+                    
                 </p>
+                
                 <p>Select a subset of indexes to display: <button onclick="showList()" style="color:black" id="showOptions">Show Options</button></p>
                 <p>Quick selections: 
                     <button onclick="selectAll()" style="color:black">All Indexes</button>
@@ -31,8 +32,9 @@
                     <button onclick="selectUPAB()" style="color:black">Updatable Indexes</button>
                 </p>
                 <form id="indexList" style="line-height: 40px; background-color: white;"></form>
+                <button onclick="generate()" style="color:black;">Generate Leaderboard</button>
                 <p>
-                    Results below are by model. Click on a header to sort by that measure. Click on an index name to open the relevant GitHub repo.
+                    Results below are by model. Click on a header to sort by that measure. Click on an index name to open the relevant GitHub repo. If you want to show different indexes, please choose some from above and click "Generate Leaderboard" again;
                 </p>
                 <p>
                     This leaderboard displays the average lookup time for a randomly selected key in a sorted dataset of size 200M.
@@ -49,20 +51,8 @@
                             <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">L</span><br><span style="font-size: 10px;">Up to 10% of data</span></button></th>
                             <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">XL</span><br><span style="font-size: 10px;">No limit</span></button></th>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                        </tbody>
                     </table>
                 </div>   
-                <p>You may Click the col header to reorder according to certain col.</p>
             </div>
         </div>
     </div>

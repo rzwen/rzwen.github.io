@@ -381,3 +381,9 @@ body {
     height: 60px;
     color:black;
 }
+
+#latencyBody{
+    text-align: center;
+    height: 60px;
+    background-color: burlywood;
+}
