@@ -385,5 +385,6 @@ body {
 #latencyBody{
     text-align: center;
     height: 60px;
+    color:black;
     background-color: burlywood;
 }

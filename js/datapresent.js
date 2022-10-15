@@ -1,6 +1,9 @@
 // Apply JSON to remember the indexList
 let indexList = [];
+let showenPlots = [0,1,3,4,5,8];
+let showenMaps = [0,1,3,4,5,8];
 
+//when click "Show Option"
 function showList(){
     for(let i in new Array(indexList.length).fill(1)){
         appen(i);
@@ -10,6 +13,7 @@ function showList(){
     hidden.innerText="Hide Option";
 }
 
+//when click "Hide Option"
 function hideOption(){
     for(let i in new Array(indexList.length).fill(1)){
         document.getElementById(i+"").remove();
@@ -19,6 +23,7 @@ function hideOption(){
     hidden.innerText="Show Option";
 }
 
+//when click "All Indexes"
 function selectAll(){
     for(let i in new Array(indexList.length).fill(1)){
         indexList[i].present="true";
@@ -31,6 +36,7 @@ function selectAll(){
     } 
 }
 
+//when click "Updable Index"
 function selectUPAB(){
     for(let i in new Array(indexList.length).fill(1)){
         if(indexList[i].type=="UPAB")
@@ -46,6 +52,7 @@ function selectUPAB(){
     }
 }
 
+//when click "Read Only"
 function selectRDON(){
     for(let i in new Array(indexList.length).fill(1)){
         if(indexList[i].type=="RDON")
@@ -70,6 +77,7 @@ function check(i){
     }
 }
 
+//append choice to table
 function appen(i){
     var old = document.getElementById("indexList");
     let newitem = document.createElement("tr");
@@ -105,18 +113,40 @@ function save(){
 //     }); 
 // }
 
+//generate one line of the leaderboard
 function newRow1(i,t,k){
-    let res = '<td>Plot<br><button'
-    if(indexList[i].plot=='true'){
-        res = res + ' onClick="removePlot()">Remove</button></td>';
+    let res = '<td>Plot<br><div id = "plot'+ i;
+    if(showenPlots.includes(Number(i))){
+        res = res + '"><button onClick="removePlot('+i+')">Remove</button></div></td>';
     }
     else{
-        res = res + ' onClick="addPlot()">Add</button></td>';
+        res = res + '"><button onClick="addPlot('+i+')">Add</button></div></td>';
     }
     res = res+'<td><a href='+indexList[i].site+'>'+indexList[i].name+'</a></td>';
     return res;
 }
 
+function addPlot(i){
+    if(showenPlots.length>6){
+        showenPlots.push(i);
+        let g = showenPlots.shift();
+        let p = document.getElementById("plot"+g);
+        p.innerHTML='<button onClick="addPlot('+g+')">Add</button>'
+    }
+    else{
+        showenPlots.push(i);
+    }
+    let t = document.getElementById("plot"+i);
+    t.innerHTML='<button onClick="removePlot('+i+')">Remove</button>';
+}
+
+function removePlot(i){
+    showenMaps.splice(showenPlots.indexOf(i),1);
+    let t = document.getElementById("plot"+i);
+    t.innerHTML='<button onClick="addPlot('+i+')">Add</button>';
+}
+
+//generate leaderboard
 function generate(){
     let t = document.getElementById("generateStandard").value;
     let k = document.getElementById("dataset").value;
@@ -135,13 +165,19 @@ function generate(){
     document.getElementById("latencyTable").appendChild(tbody);
 }
 
+//draw plots
+// function draw(){
+//     let plot = document.getElementById();
+// }
 
+// when load the page, read indexList from file, then generate table and plots 
 window.onload=function(){
     fetch('./data/indexList.txt')
     .then(res => res.text())
     .then(txt => {
         indexList=indexList.concat(JSON.parse(txt));
         generate();
+        // draw();
     }
     );
 }

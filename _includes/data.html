@@ -22,7 +22,6 @@
                         <option>kk</option>
                         <optgroup label="Synthetic Datasets"></optgroup>
                     </select>
-                    
                 </p>
                 
                 <p>Select a subset of indexes to display: <button onclick="showList()" style="color:black" id="showOptions">Show Options</button></p>
@@ -53,6 +52,12 @@
                         </thead>
                     </table>
                 </div>   
+            </div>
+            <div class="col-8">
+                <h3>Plots</h3>
+                <p>Here we provide a plot of index size against lookup latency on GRE data. Indexes can be added and removed from the plot using the corresponding buttons on the leaderboard. Noted that in maximun there can be up to 7 plots presented</p>
+                <canvas id="plots" style="height: 500px; width:100%;display:block;" width="920px" height="625px"></canvas>
+                <button>Clear the Area</button>
             </div>
         </div>
     </div>
