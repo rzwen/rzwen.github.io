@@ -108,7 +108,7 @@ function save(){
 function newRow1(i,t,k){
     let res = '<td>Plot<button'
     if(indexList[i].plot=='true'){
-        res = res + ' onClick="removePlot()">Remove</button></td>';
+        res = res + ' onClick="removePlot()">Remove</button></td><br>';
     }
     else{
         res = res + ' onClick="addPlot()">Add</button></td>';
