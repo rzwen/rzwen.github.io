@@ -141,7 +141,7 @@ function addPlot(i){
 }
 
 function removePlot(i){
-    showenMaps.splice(showenPlots.indexOf(i),1);
+    showenPlots.splice(showenPlots.indexOf(i),1);
     let t = document.getElementById("plot"+i);
     t.innerHTML='<button onClick="addPlot('+i+')">Add</button>';
 }
