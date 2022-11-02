@@ -1,5 +1,6 @@
 // Apply JSON to remember the indexList
 let indexList = [];
+let datasetList = [];
 let showenPlots = [0,1,3,4,5,8];
 let showenMaps = [0,1,3,4,5,8];
 
@@ -36,10 +37,10 @@ function selectAll(){
     } 
 }
 
-//when click "Updable Index"
-function selectUPAB(){
+//when click "Learned Indexes"
+function selectLE(){
     for(let i in new Array(indexList.length).fill(1)){
-        if(indexList[i].type=="UPAB")
+        if(indexList[i].type=="Learn")
             indexList[i].present="true";
         else
             indexList[i].present="false";
@@ -52,10 +53,10 @@ function selectUPAB(){
     }
 }
 
-//when click "Read Only"
-function selectRDON(){
+//when click "Traditional Indexes"
+function selectTR(){
     for(let i in new Array(indexList.length).fill(1)){
-        if(indexList[i].type=="RDON")
+        if(indexList[i].type=="Trad")
             indexList[i].present="true";
         else
             indexList[i].present="false";
@@ -163,6 +164,22 @@ function generate(){
         }
     }
     document.getElementById("latencyTable").appendChild(tbody);
+}
+
+//show the datasetList
+function datasets(){
+    let t = document.getElementById("dataset");
+    let group = document.createElement("optgroup");
+    group.innerText = '---200M_uint64---';
+    t.appendChild(group);
+    for(let i in new Array(datasetList.length).fill(1)){
+        let newdataset = document.createElement('option');
+        newdataset.innerHTML=datasetList[i].name;
+        t.appendChild(newdataset);
+    }
+    let group2 = document.createElement("optgroup");
+    group2.innerText = '---Other Datasets---';
+    t.appendChild(group2);
 }
 
 //draw plots tut from: https://blog.csdn.net/kitty_ELF/article/details/115750534
@@ -323,6 +340,12 @@ const data = pointsData = [{
 
 // when load the page, read indexList from file, then generate table and plots 
 window.onload=function(){
+    fetch('./data/datasetList.txt')
+    .then(res=>res.text())
+    .then(txt=> {
+        datasetList=datasetList.concat(JSON.parse(txt));
+        datasets();
+    });
     fetch('./data/indexList.txt')
     .then(res => res.text())
     .then(txt => {

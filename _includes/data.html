@@ -2,35 +2,29 @@
 <section id="data" class="content-section text-center" style="text-align: left; line-height: normal;">
     <div class="container">
         <div class="row">
-            <h2 style="text-align: center;">data details</h2>
+            <h2 style="text-align: center;">data Present</h2>
             <div class="col-4"></div>
             <div class="col-8">
-                <h3>Leaderboard</h3>
                 <p>Metric to display by: 
                     <select readonly style="color:black" id="generateStandard">
-                        <option value="Latency" selected>Latency(ns)</option>
-                        <option value="BuildUpTime">BuildUpTime(ns)</option>
-                        <option value="Size">Size</option>
+                        <option value="Single_thread" selected>Single-thread</option>
+                        <option value="Multi_threads">Multi-thread</option>
                     </select>
                 </p>
                 <p>
                     Displaying results on datasets:
-                    <select readonly style="color:black" id="dataset">
-                        <optgroup label="---200m Datasets---"></optgroup>
-                        <optgroup label="---64bit-Datasets--"></optgroup>
-                        <optgroup label="Real-World-Datasets"></optgroup>
-                        <option>kk</option>
-                        <optgroup label="Synthetic Datasets"></optgroup>
+                    <select readonly style="color:black" id="dataset"> 
                     </select>
                 </p>
                 
                 <p>Select a subset of indexes to display: <button onclick="showList()" style="color:black" id="showOptions">Show Options</button></p>
                 <p>Quick selections: 
                     <button onclick="selectAll()" style="color:black">All Indexes</button>
-                    <button onclick="selectRDON()" style="color:black">Read-only Indexes</button>
-                    <button onclick="selectUPAB()" style="color:black">Updatable Indexes</button>
+                    <button onclick="selectTR()" style="color:black">Traditional Indexes</button>
+                    <button onclick="selectLE()" style="color:black">Learned Indexes</button>
                 </p>
                 <form id="indexList" style="line-height: 40px; background-color: white;"></form>
+                <h3>Leaderboard</h3>
                 <button onclick="generate()" style="color:black;">Generate Leaderboard</button>
                 <p>
                     Results below are by model. Click on a header to sort by that measure. Click on an index name to open the relevant GitHub repo. If you want to show different indexes, please choose some from above and click "Generate Leaderboard" again;
