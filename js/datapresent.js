@@ -171,6 +171,7 @@ function generate(){
 function datasets(){
     let t = document.getElementById("dataset");
     let group = document.createElement("optgroup");
+    group.setAttribute("style","color:black");
     group.innerText = '---200M_uint64---';
     t.appendChild(group);
     for(let i in new Array(datasetList.length).fill(1)){

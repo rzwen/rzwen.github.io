@@ -369,12 +369,14 @@ body {
 #data select{
     background-color: #219ab3;
     line-height: 0%;
+    color:#000000;
 }
 
 
-#data select optgroup{
+/* #data select optgroup{
     color:darkgoldenrod;
-}
+    background-color: blue;
+} */
 
 #latencyTable thead th button{
     width:150px;

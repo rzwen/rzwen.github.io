@@ -1,5 +1,5 @@
 [{"name":"PGM","type":"Learn","present":"false","plot":"false","heatmap":"false","site":""},{"name":"LIPP","type":"Learn","present":"true","plot":"true","heatmap":"true","site":""},{"name":"BTree","type":"Trad","present":"true","plot":"true","heatmap":"true","site":""},{"name":"HOT","type":"Trad","present":"false","plot":"false","heatmap":"false","site":""},{"name":"ALEX","type":"Learn","present":"true","plot":"true","heatmap":"true","site":""},{"name":"Wormhole","type":"Trad","present":"true","plot":"false","heatmap":"false","site":""},
 {"name":"Artunsync","type":"Trad","present":"false","plot":"false","heatmap":"false","site":""},
-{"name":"xindex","type":"Learn","present":"true","plot":"false","heatmap":"false","site":""},
-{"name":"finedex","type":"Learn","present":"false","plot":"false","heatmap":"false","site":""},
-{"name":"masstree","type":"Trad","present":"false","plot":"false","heatmap":"false","site":""}]
+{"name":"XIndex","type":"Learn","present":"true","plot":"false","heatmap":"false","site":""},
+{"name":"Finedex","type":"Learn","present":"false","plot":"false","heatmap":"false","site":""},
+{"name":"massTree","type":"Trad","present":"false","plot":"false","heatmap":"false","site":""}]
