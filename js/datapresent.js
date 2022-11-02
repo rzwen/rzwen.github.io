@@ -171,16 +171,17 @@ function generate(){
 function datasets(){
     let t = document.getElementById("dataset");
     let group = document.createElement("optgroup");
-    group.setAttribute("style","color:black");
-    group.innerText = '---200M_uint64---';
+    group.setAttribute("label","---200M_uint64---");
+    group.id = "datagroup";
     t.appendChild(group);
     for(let i in new Array(datasetList.length).fill(1)){
         let newdataset = document.createElement('option');
         newdataset.innerHTML=datasetList[i].name;
-        t.appendChild(newdataset);
+        group.appendChild(newdataset);
     }
     let group2 = document.createElement("optgroup");
-    group2.innerText = '---Other Datasets---';
+    group2.setAttribute("label",'---Other Datasets---');
+    group2.id = "datagroup";
     t.appendChild(group2);
 }
 

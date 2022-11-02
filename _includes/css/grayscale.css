@@ -372,6 +372,13 @@ body {
     color:#000000;
 }
 
+optgroup{
+    color:white;
+}
+
+option{
+    color:black;
+}
 
 /* #data select optgroup{
     color:darkgoldenrod;
