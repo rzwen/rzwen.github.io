@@ -28,6 +28,7 @@ function hideOption(){
 function selectAll(){
     for(let i in new Array(indexList.length).fill(1)){
         indexList[i].present="true";
+        indexList[i].heatmap="true";
     }
     if(document.getElementById("showOptions").innerText=='Hide Option'){
         for(let i in new Array(indexList.length).fill(1)){
@@ -40,10 +41,14 @@ function selectAll(){
 //when click "Learned Indexes"
 function selectLE(){
     for(let i in new Array(indexList.length).fill(1)){
-        if(indexList[i].type=="Learn")
+        if(indexList[i].type=="Learn"){
             indexList[i].present="true";
-        else
+            indexList[i].heatmap="true";
+        }
+        else{
             indexList[i].present="false";
+            indexList[i].heatmap="false";
+        }
     }
     if(document.getElementById("showOptions").innerText=='Hide Option'){
         for(let i in new Array(indexList.length).fill(1)){
@@ -56,10 +61,14 @@ function selectLE(){
 //when click "Traditional Indexes"
 function selectTR(){
     for(let i in new Array(indexList.length).fill(1)){
-        if(indexList[i].type=="Trad")
+        if(indexList[i].type=="Trad"){
             indexList[i].present="true";
-        else
+            indexList[i].heatmap="true";
+        } 
+        else{
             indexList[i].present="false";
+            indexList[i].heatmap="false";
+        }
     }
     if(document.getElementById("showOptions").innerText=='Hide Option'){
         for(let i in new Array(indexList.length).fill(1)){
@@ -72,9 +81,11 @@ function selectTR(){
 function check(i){
     if(indexList[i].present=="true"){
         indexList[i].present="false";
+        indexList[i].heatmap="false";
     }
     else{
         indexList[i].present="true";
+        indexList[i].heatmap="true";
     }
 }
 
