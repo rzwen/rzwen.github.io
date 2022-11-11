@@ -4,6 +4,13 @@ let datasetList = [];
 let showenPlots = [0,1,3,4,5,8];
 let showenMaps = [0,1,3,4,5,8];
 
+// data[] store all test data 
+//0: LIPP , 1: BTree , 2: HOT , 3: ALEX , 4: Wormhole , 5: Artunsync , 6: XIndex , 7: FineIndex , 8: massTree , 9: PGM
+let data = [];
+data[0] = []; //store mt
+data[1] = []; //store st
+let readradio = [1,0.8,0.5,0.2,0];
+
 //when click "Show Option"
 function showList(){
     for(let i in new Array(indexList.length).fill(1)){
@@ -126,7 +133,7 @@ function save(){
 // }
 
 //generate one line of the leaderboard
-function newRow1(i,t,k){
+function newRow1(i,stand,dataset){
     let res = '<td>Plot<br><div id = "plot'+ i;
     if(showenPlots.includes(Number(i))){
         res = res + '"><button onClick="removePlot('+i+')">Remove</button></div></td>';
@@ -134,7 +141,22 @@ function newRow1(i,t,k){
     else{
         res = res + '"><button onClick="addPlot('+i+')">Add</button></div></td>';
     }
+
     res = res+'<td><a href='+indexList[i].site+'>'+indexList[i].name+'</a></td>';
+    for(let radio in readradio){
+        let tmp = 0;
+        let num = 0;
+        for(let j in new Array(data[stand][i].length).fill(1)){
+            if(data[stand][i][j][5].indexOf(dataset)==-1){
+                continue;
+            }
+            if(Math.abs(data[stand][i][j][0]-readradio[radio])<0.001){
+                tmp+=parseInt(data[stand][i][j][7]);
+                num+=1;
+            }
+        }
+        res+='<td>'+parseInt(tmp/num)+'</td>';
+    }
     return res;
 }
 
@@ -158,9 +180,10 @@ function removePlot(i){
     t.innerHTML='<button onClick="addPlot('+i+')">Add</button>';
 }
 
-//generate leaderboard
+//generate leaderboard and heatmap(not done yet)
 function generate(){
-    let t = document.getElementById("generateStandard").value;
+    let tt = document.getElementById("generateStandard").value;
+    let t = (tt=="Single_thread"?1:0);
     let k = document.getElementById("dataset").value;
     let g = document.getElementById("latencyBody");
     if(g!=null)
@@ -363,8 +386,114 @@ window.onload=function(){
     .then(res => res.text())
     .then(txt => {
         indexList=indexList.concat(JSON.parse(txt));
+        for(let i in new Array(indexList.length).fill(1)){
+            data[0][i] = [];
+            data[1][i] = [];
+            //0: LIPP , 1: BTree , 2: HOT , 3: ALEX , 4: Wormhole , 5: Artunsync , 6: XIndex , 7: FineIndex , 8: massTree , 9: PGM
+        }
+    });
+    fetch('./data/mt_new.csv')
+    .then(res => res.text())
+    .then(txt => {
+        var lines = txt.split(/[(\r\n)\r\n]+/);
+        for(let i in new Array(lines.length).fill(1)){
+            if(i==0){
+                continue;
+            }
+            var contains = lines[i].split(',');
+            var newContain = [];
+            newContain[0] = contains[1];
+            newContain[1] = contains[2];
+            newContain[2] = contains[3];
+            newContain[3] = contains[4];
+            newContain[4] = contains[5];
+            newContain[5] = contains[6];
+            newContain[6] = contains[7];
+            newContain[7] = contains[8];
+            newContain[8] = contains[22];
+            switch(newContain[6]){
+                case 'alexol':
+                    data[0][3][data[0][3].length] = newContain;
+                    break;
+                case 'btreeolc':
+                    data[0][1][data[0][1].length]=newContain;
+                    break;
+                case 'hotrowex':
+                    data[0][2][data[0][2].length]=newContain;
+                    break;
+                case 'artolc':
+                    data[0][5][data[0][5].length]=newContain;
+                    break;
+                case 'masstree':
+                    data[0][8][data[0][8].length]=newContain;
+                    break;
+                case 'wormhole_u64':
+                    data[0][4][data[0][4].length]=newContain;
+                    break;
+                case 'finedex':
+                    data[0][7][data[0][7].length]=newContain;
+                    break;
+                case 'xindex':
+                    data[0][6][data[0][6].length]=newContain;
+                    break;
+                case 'lippol':
+                    data[0][0][data[0][0].length]=newContain;
+            }
+        }
+    });
+    fetch('./data/st_new.csv')
+    .then(res => res.text())
+    .then(txt => {
+        var lines = txt.split(/[(\r\n)\r\n]+/);
+        for(let i in new Array(lines.length).fill(1)){
+            if(i==0){
+                continue;
+            }
+            var contains = lines[i].split(',');
+            var newContain = [];
+            newContain[0] = contains[1];
+            newContain[1] = contains[2];
+            newContain[2] = contains[3];
+            newContain[3] = contains[4];
+            newContain[4] = contains[5];
+            newContain[5] = contains[6];
+            newContain[6] = contains[7];
+            newContain[7] = contains[8];
+            newContain[8] = contains[22];
+            switch(newContain[6]){
+                case 'alex':
+                    data[1][3][data[1][3].length] = newContain;
+                    break;
+                case 'btree':
+                    data[1][1][data[1][1].length]=newContain;
+                    break;
+                case 'hot':
+                    data[1][2][data[1][2].length]=newContain;
+                    break;
+                case 'artunsync':
+                    data[1][5][data[1][5].length]=newContain;
+                    break;
+                case 'masstree':
+                    data[1][8][data[1][8].length]=newContain;
+                    break;
+                case 'wormhole_u64':
+                    data[1][4][data[1][4].length]=newContain;
+                    break;
+                case 'finedex':
+                    data[1][7][data[1][7].length]=newContain;
+                    break;
+                case 'xindex':
+                    data[1][6][data[1][6].length]=newContain;
+                    break;
+                case 'lipp':
+                    data[1][0][data[1][0].length]=newContain;
+                    break;
+                case 'pgm':
+                    data[1][9][data[1][9].length]=newContain;
+            }
+        }
         generate();
         draw();
-    }
-    );
+    });
+    
 }

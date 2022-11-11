@@ -13,11 +13,18 @@
     </style>
 </head>
 <body>
+    <p>Metric to display by: 
+        <select style="color:black" id="generateStandard">
+            <option value="Single_thread" selected>Single-thread</option>
+            <option value="Multi_threads">Multi-thread</option>
+        </select>
+    </p>
     <p>
         Displaying results on datasets:
         <select id="dataset"> 
         </select>
     </p>
+    <button onclick="generate()" style="color:black;">Generate Heatmap and Leaderboard</button>
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">

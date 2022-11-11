@@ -26,7 +26,7 @@
                 </p>
                 <form id="indexList" style="line-height: 40px; background-color:blanchedalmond"></form>
                 <button onclick="generate()" style="color:black;">Generate Heatmap and Leaderboard</button>
-                <br>
+                <h2></h2>
                 <h3>Leaderboard</h3>
                 <p>
                     Results below are by model. Click on a header to sort by that measure. Click on an index name to open the relevant GitHub repo. If you want to show different indexes, please choose some from above and click "Generate Leaderboard" again;
@@ -39,12 +39,12 @@
                     <table class="sortable tables" id = "latencyTable">
                         <thead>
                             <th></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">Index</span><br><span style="font-size: 10px;">size</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">XS</span><br><span style="font-size: 10px;">Up to 0.01% of data</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">S</span><br><span style="font-size: 10px;">Up to 0.1% of data</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">M</span><br><span style="font-size: 10px;">Up to 1% of data</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">L</span><br><span style="font-size: 10px;">Up to 10% of data</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">XL</span><br><span style="font-size: 10px;">No limit</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">Index</span><br><span style="font-size: 10px;">Throughput</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">Read</span><br><span style="font-size: 10px;">Read:1 Write:0</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">RW</span><br><span style="font-size: 10px;">Read:0.8 Write:0.2</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">M</span><br><span style="font-size: 10px;">Read:0.5 Write:0.5</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">WR</span><br><span style="font-size: 10px;">Read:0.2 Write:0.8</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">Write</span><br><span style="font-size: 10px;">Read:0 Write:1</span></button></th>
                         </thead>
                     </table>
                 </div>   
