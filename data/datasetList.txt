@@ -1,1 +1,14 @@
-[{"name":"covid_tweets"},{"name": "planet_features_osm_id"},{"name": "biology"},{"name": "libraries_io_repository_dependencies"},{"name": "wise_all_sky_data_htm"},{"name": "fb"},{"name": "books"},{"name": "stovf_vote_id"},{"name": "wiki_revid"},{"name": "gnomad"},{"name": "osm_history_node"},{"name": "eth_cumgas"},{"name": "osm_cellids"},{"name": "planetways"}]
+[{"name":"covid_tweets","local": "81908" ,"global": "850"},
+{"name": "planet_features_osm_id","local": "613597" ,"global": "2314"},
+{"name": "biology","local": "1290208" ,"global": "1426"},
+{"name": "libraries_io_repository_dependencies","local": "145808" ,"global": "639"},
+{"name": "wise_all_sky_data_htm","local": "79035" ,"global": "382"},
+{"name": "fb","local": "1055308" ,"global": "1687"},
+{"name": "books","local": "262604" ,"global": "97"},
+{"name": "stovf_vote_id","local": "17833" ,"global": "133"},
+{"name": "wiki_revid","local": "28411" ,"global": "50"},
+{"name": "gnomad","local": "273071" ,"global": "525"},
+{"name": "osm_history_node","local": "105468" ,"global": "468"},
+{"name": "eth_cumgas","local": "29170" ,"global": "30"},
+{"name": "osm_cellids","local": "661115" ,"global": "5495"},
+{"name": "planetways","local": "130671" ,"global": "778"}]
