@@ -161,7 +161,11 @@ function newRow1(i,stand,dataset){
                 num+=1;
             }
         }
-        res+='<td>'+parseInt(tmp/num)+'</td>';
+        if(num==0){
+            res+='<td>NotTested</td>';
+        }
+        else
+            res+='<td>'+parseInt(tmp/num)+'</td>';
     }
     return res;
 }
