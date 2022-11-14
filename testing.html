@@ -90,23 +90,11 @@
             <option value="Size">Size</option>
         </select>
     </p>
-    <p>
-        Displaying results on datasets:
-        <select readonly style="color:black" id="dataset">
-            <optgroup label="---200m Datasets---"></optgroup>
-            <optgroup label="---64bit-Datasets--"></optgroup>
-            <optgroup label="Real-World-Datasets"></optgroup>
-            <option>kk</option>
-            <optgroup label="Synthetic Datasets"></optgroup>
-        </select>
-        <button onclick="generate()">Regenerate</button>
-    </p>
-    <canvas id="plots"></canvas>
-    <p>take up</p>
-    <p>take up</p>
-    <p>take up</p>
-    <p>take up</p>
-    <p>take up</p>
-    <p>take up</p>
-                <button style="color: black ;">Clear the Area</button>
+    <div class="col-8">
+        <h3>Plots</h3>
+        <p>Here we provide a plot of index size against lookup latency on GRE data. Indexes can be added and removed from the plot using the corresponding buttons on the leaderboard. Noted that in maximun there can be up to 7 plots presented</p>
+        <canvas id="plots" style="background-color: white;"></canvas>
+        <button style="color: black ;">Clear the Area</button>
+    </div>
+    <button style="color: black ;">Clear the Area</button>
 </body>

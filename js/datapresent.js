@@ -142,7 +142,13 @@ function newRow1(i,stand,dataset){
         res = res + '"><button onClick="addPlot('+i+')">Add</button></div></td>';
     }
 
-    res = res+'<td><a href='+indexList[i].site+'>'+indexList[i].name+'</a></td>';
+    res = res+'<td><a href='+indexList[i].site+'>';
+    if(indexList[i].type=='Learn'){
+        res= res + '<b>'+indexList[i].name+'<b></a></td>';
+    }
+    else{
+        res = res+ indexList[i].name+'</a></td>';
+    }
     for(let radio in readradio){
         let tmp = 0;
         let num = 0;
@@ -198,6 +204,7 @@ function generate(){
         }
     }
     document.getElementById("latencyTable").appendChild(tbody);
+    draw();
 }
 
 //show the datasetList
@@ -493,7 +500,6 @@ window.onload=function(){
             }
         }
         generate();
-        draw();
     });
     
 }
