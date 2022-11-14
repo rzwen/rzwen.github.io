@@ -142,7 +142,7 @@ function newRow1(i,stand,dataset){
         res = res + '"><button onClick="addPlot('+i+')">Add</button></div></td>';
     }
 
-    res = res+'<td><a href='+indexList[i].site+'>';
+    res = res+'<td><a target="blank" href='+indexList[i].site+'>';
     if(indexList[i].type=='Learn'){
         res= res + '<b>'+indexList[i].name+'<b></a></td>';
     }
