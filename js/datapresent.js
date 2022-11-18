@@ -428,14 +428,18 @@ const data = pointsData = [{
 
 
 function generateHeatMap(){
-
+    console.log(15623);
     w = window.innerWidth*0.6;
     h = window.innerHeight*0.8;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, w/h, 0.1 , 100);
-    camera.position.set(5,5,5);
+    camera.position.set(7,10,8);
     camera.lookAt(0,0,0)
-
+    this.mesh = new THREE.Object3D();
+    var axesHelper = new THREE.AxesHelper(12); this.mesh.add(axesHelper);
+    var gridXZ = new THREE.GridHelper(6, 6, 0x7BB7A4, 0x7BB7A4); gridXZ.position.set(3,0,3); this.mesh.add(gridXZ);
+    var gridXY = new THREE.GridHelper(6, 6, 0x7BB7A4, 0x7BB7A4); gridXY.position.set(3,3,0); gridXY.rotation.x = Math.PI/2.0; this.mesh.add(gridXY); 
+    var gridYZ = new THREE.GridHelper(6, 6, 0x7BB7A4, 0x7BB7A4); gridYZ.position.set(0,3,3); gridYZ.rotation.z = Math.PI/2; this.mesh.add(gridYZ);
     for(dataset of datasetList){
         if(showInHeatmap.includes(dataset.name)){
             local = Number(dataset.local);
@@ -476,9 +480,15 @@ function generateHeatMap(){
     }
     const light = new THREE.AmbientLight();
     scene.add(light);
+    scene.add(this.mesh);
     const renderer = new THREE.WebGLRenderer({alpha:true});
     renderer.setSize(w,h);
-    renderer.render(scene,camera);
+    function render() {
+        renderer.render(scene,camera);
+      }
+      render();
+    var controls = new THREE.OrbitControls(camera,renderer.domElement);
+    controls.addEventListener('change', render);
     document.getElementById('tt').appendChild(renderer.domElement);
 }
 
