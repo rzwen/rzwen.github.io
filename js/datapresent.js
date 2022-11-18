@@ -3,6 +3,7 @@ let indexList = [];
 let datasetList = [];
 let showenPlots = [0,1,3,4,5,8];
 let showenMaps = [0,1,3,4,5,8];
+let showInHeatmap = ['biology','covid_tweets','planet_features_osm_id','fb','books','wiki_revid'];
 
 // data[] store all test data 
 //0: LIPP , 1: BTree , 2: HOT , 3: ALEX , 4: Wormhole , 5: Artunsync , 6: XIndex , 7: FineIndex , 8: massTree , 9: PGM
@@ -10,6 +11,8 @@ let data = [];
 data[0] = []; //store mt
 data[1] = []; //store st
 let readradio = [1,0.8,0.5,0.2,0];
+
+let heatmap=[]
 
 //when click "Show Option"
 function showList(){
@@ -227,6 +230,26 @@ function datasets(){
     group2.setAttribute("label",'---Other Datasets---');
     group2.id = "datagroup";
     t.appendChild(group2);
+}
+
+//dataset List for heatmap
+function datasetLi(){
+    let t = document.getElementById("datasetlt");
+    for(let i in new Array(datasetList.length).fill(1)){
+        let item = document.createElement('li');
+        item.setAttribute("float",'left');
+        var element = '<div style="color: black; display: inline; overflow:hidden; white-space:nowrap"><input type="checkbox" style="height:15px;width:15px"><label></label></div>';
+        item.innerHTML = element;
+        item.querySelectorAll("input")[0].id = datasetList[i].name;
+        if(showInHeatmap.includes(datasetList[i].name)){
+            item.querySelectorAll("input")[0].setAttribute('checked','true');
+        }
+        let g = datasetList[i].name;
+        if(g.length>15){g=g.slice(0,g.indexOf('_')); console.log(g);} 
+        item.querySelectorAll("label")[0].setAttribute('for',datasetList[i].name); 
+        item.querySelector("label").innerText = g;
+        t.appendChild(item);
+    } 
 }
 
 //draw plots tut from: https://blog.csdn.net/kitty_ELF/article/details/115750534
@@ -504,6 +527,7 @@ window.onload=function(){
             }
         }
         generate();
+        datasetLi();
     });
     
 }
