@@ -235,21 +235,28 @@ function datasets(){
 //dataset List for heatmap
 function datasetLi(){
     let t = document.getElementById("datasetlt");
+    let gg = document.createElement('tr');
     for(let i in new Array(datasetList.length).fill(1)){
-        let item = document.createElement('li');
-        item.setAttribute("float",'left');
-        var element = '<div style="color: white; display: inline; overflow:hidden; white-space:nowrap"><input type="checkbox" style="height:15px;width:15px"><label></label></div>';
+        let item = document.createElement('td');
+        item.setAttribute("style",'{width:20%}');
+        var element = '<input type="checkbox" style="height:15px;width:15px"><label></label>';
         item.innerHTML = element;
         item.querySelectorAll("input")[0].id = datasetList[i].name;
         if(showInHeatmap.includes(datasetList[i].name)){
             item.querySelectorAll("input")[0].setAttribute('checked','true');
         }
         let g = datasetList[i].name;
-        if(g.length>15){g=g.slice(0,g.indexOf('_')); console.log(g);} 
+        if(g.length>15){g=g.slice(0,g.indexOf('_'));} 
         item.querySelectorAll("label")[0].setAttribute('for',datasetList[i].name); 
-        item.querySelector("label").innerText =g+'__';
-        t.appendChild(item);
-    } 
+        item.querySelector("label").innerText =g;
+        gg.appendChild(item);
+        if(i%5==4){
+            t.appendChild(gg);
+            gg = document.createElement('tr');
+        }
+    }
+    if(gg.innerHTML!=undefined)
+        t.appendChild(gg); 
 }
 
 //draw plots tut from: https://blog.csdn.net/kitty_ELF/article/details/115750534
