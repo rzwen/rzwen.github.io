@@ -238,8 +238,7 @@ function datasetLi(){
     for(let i in new Array(datasetList.length).fill(1)){
         let item = document.createElement('li');
         item.setAttribute("float",'left');
-        item.setAttribute('style','width:20%');
-        var element = '<div style="color: black; display: inline; overflow:hidden; white-space:nowrap"><input type="checkbox" style="height:15px;width:15px"><label></label></div>';
+        var element = '<div style="color: white; display: inline; overflow:hidden; white-space:nowrap"><input type="checkbox" style="height:15px;width:15px"><label></label></div>';
         item.innerHTML = element;
         item.querySelectorAll("input")[0].id = datasetList[i].name;
         if(showInHeatmap.includes(datasetList[i].name)){
@@ -248,7 +247,7 @@ function datasetLi(){
         let g = datasetList[i].name;
         if(g.length>15){g=g.slice(0,g.indexOf('_')); console.log(g);} 
         item.querySelectorAll("label")[0].setAttribute('for',datasetList[i].name); 
-        item.querySelector("label").innerText = g;
+        item.querySelector("label").innerText =g+'__';
         t.appendChild(item);
     } 
 }
