@@ -535,6 +535,7 @@ window.onload=function(){
         }
         generate();
         datasetLi();
+        console.log(THREE);
     });
     
 }
