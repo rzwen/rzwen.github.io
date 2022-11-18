@@ -231,6 +231,17 @@ function datasets(){
     group2.id = "datagroup";
     t.appendChild(group2);
 }
+//when somebody check to change what heatmap present
+function adjustHeatmap(i){
+    let z = document.getElementById(datasetList[i].name).checked;
+    if(z){
+        showInHeatmap[showInHeatmap.length]=datasetList[i].name;
+    }
+    else{
+        var index = showInHeatmap.indexOf(datasetList[i].name);
+        showInHeatmap.splice(index,1);
+    }
+}
 
 //dataset List for heatmap
 function datasetLi(){
@@ -239,7 +250,7 @@ function datasetLi(){
     for(let i in new Array(datasetList.length).fill(1)){
         let item = document.createElement('td');
         item.setAttribute("style",'{width:20%}');
-        var element = '<input type="checkbox" style="height:15px;width:15px"><label></label>';
+        var element = '<input type="checkbox" onClick="adjustHeatmap('+i+')" style="height:15px;width:15px"><label></label>';
         item.innerHTML = element;
         item.querySelectorAll("input")[0].id = datasetList[i].name;
         if(showInHeatmap.includes(datasetList[i].name)){
@@ -415,6 +426,62 @@ const data = pointsData = [{
     context.restore();
 }
 
+
+function generateHeatMap(){
+
+    w = window.innerWidth*0.6;
+    h = window.innerHeight*0.8;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, w/h, 0.1 , 100);
+    camera.position.set(5,5,5);
+    camera.lookAt(0,0,0)
+
+    for(dataset of datasetList){
+        if(showInHeatmap.includes(dataset.name)){
+            local = Number(dataset.local);
+            global = Number(dataset.global);
+            for(radio of readradio){
+                maxTr = ['',0];//[indexName,AvgThroughput]
+                maxLe = ['',0];
+                for(index in new Array(data[1].length).fill(1)){
+                    totalTh = 0;
+                    count = 0;
+                    for(item of data[1][index]){
+                        if(item[0]!=radio){
+                            continue;
+                        }
+                        if(item[5].indexOf(dataset.name)==-1){
+                            continue;
+                        }
+                        totalTh += Number(item[7]);
+                        count += 1;
+                    }
+                    totalTh = totalTh/count;
+                    if(indexList[index].type=='Trad'){
+                        if(totalTh>Number(maxTr[1])){
+                            maxTr[0]=indexList[index].name;
+                            maxTr[1]=totalTh;
+                        }
+                    } 
+                    else{
+                        if(totalTh>Number(maxLe[1])){
+                            maxLe[0]=indexList[index].name;
+                            maxLe[1]=totalTh;
+                        }
+                    }
+                }
+            }
+        }
+        else{continue;}
+    }
+    const light = new THREE.AmbientLight();
+    scene.add(light);
+    const renderer = new THREE.WebGLRenderer({alpha:true});
+    renderer.setSize(w,h);
+    renderer.render(scene,camera);
+    document.getElementById('tt').appendChild(renderer.domElement);
+}
+
 // when load the page, read indexList from file, then generate table and plots 
 window.onload=function(){
     fetch('./data/datasetList.txt')
@@ -535,7 +602,6 @@ window.onload=function(){
         }
         generate();
         datasetLi();
-        console.log(THREE);
+        generateHeatMap();
     });
-    
 }
