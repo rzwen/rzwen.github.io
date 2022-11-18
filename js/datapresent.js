@@ -238,6 +238,7 @@ function datasetLi(){
     for(let i in new Array(datasetList.length).fill(1)){
         let item = document.createElement('li');
         item.setAttribute("float",'left');
+        item.setAttribute('style','width:20%');
         var element = '<div style="color: black; display: inline; overflow:hidden; white-space:nowrap"><input type="checkbox" style="height:15px;width:15px"><label></label></div>';
         item.innerHTML = element;
         item.querySelectorAll("input")[0].id = datasetList[i].name;
