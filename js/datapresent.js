@@ -426,20 +426,47 @@ const data = pointsData = [{
     context.restore();
 }
 
-
 function generateHeatMap(){
-    console.log(15623);
+    var ele = document.getElementById('tt');
+    ele.innerHTML='';
     w = window.innerWidth*0.6;
     h = window.innerHeight*0.8;
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, w/h, 0.1 , 100);
-    camera.position.set(7,10,8);
+    const camera = new THREE.PerspectiveCamera(75, w/h, 0.1 , 100000);
+    camera.position.set(0,14,12);
     camera.lookAt(0,0,0)
     this.mesh = new THREE.Object3D();
     var axesHelper = new THREE.AxesHelper(12); this.mesh.add(axesHelper);
-    var gridXZ = new THREE.GridHelper(6, 6, 0x7BB7A4, 0x7BB7A4); gridXZ.position.set(3,0,3); this.mesh.add(gridXZ);
-    var gridXY = new THREE.GridHelper(6, 6, 0x7BB7A4, 0x7BB7A4); gridXY.position.set(3,3,0); gridXY.rotation.x = Math.PI/2.0; this.mesh.add(gridXY); 
-    var gridYZ = new THREE.GridHelper(6, 6, 0x7BB7A4, 0x7BB7A4); gridYZ.position.set(0,3,3); gridYZ.rotation.z = Math.PI/2; this.mesh.add(gridYZ);
+    var gridXZ = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridXZ.position.set(5,0,5); this.mesh.add(gridXZ);
+    var gridXY = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridXY.position.set(5,5,0); gridXY.rotation.x = Math.PI/2.0; this.mesh.add(gridXY); 
+    var gridYZ = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridYZ.position.set(10,5,5); gridYZ.rotation.z = Math.PI/2; this.mesh.add(gridYZ);
+    
+    var loader = new THREE.FontLoader();
+
+    loader.load( '../js/3-js/helvetiker_regular.typeface.json', function ( font ) {
+        var fontMaterial = new THREE.MeshLambertMaterial({color: 0x808080});
+        var easy = new THREE.TextGeometry( 'Easy', {font: font,size: 0.5,height: 0.01,} );
+        var fontModelE = new THREE.Mesh(easy,fontMaterial); fontModelE.position.set(-3,0,0); fontModelE.rotation.x=-Math.PI/2;this.mesh.add(fontModelE);
+        var Difficult = new THREE.TextGeometry( 'Difficult', {font: font,size: 0.5,height: 0.01,} );
+        var fontModelD = new THREE.Mesh(Difficult,fontMaterial); fontModelD.position.set(9.5,0,11); fontModelD.rotation.x=-Math.PI/2;this.mesh.add(fontModelD);
+        var local = new THREE.TextGeometry( '1e4      Local hardness H (err bounds=32)', {font: font,size: 0.25,height: 0.01} );
+        var fontModelL = new THREE.Mesh(local,fontMaterial); fontModelL.position.set(-1,0,1); fontModelL.rotation.x=-Math.PI/2;fontModelL.rotation.z=-Math.PI/2;this.mesh.add(fontModelL);
+        var global = new THREE.TextGeometry( '1e2        Global hardness H (err bounds=4096)', {font: font,size: 0.25,height: 0.01} );
+        var fontModelG = new THREE.Mesh(global,fontMaterial); fontModelG.position.set(0.5,0,11); fontModelG.rotation.x=-Math.PI/2;this.mesh.add(fontModelG);
+        var radio = new THREE.TextGeometry( 'write radio', {font: font,size: 0.4,height: 0.01} );
+        var fontModelR = new THREE.Mesh(radio,fontMaterial); fontModelR.position.set(-1.5,5,0); fontModelR.rotation.z=Math.PI/2;this.mesh.add(fontModelR);
+        for(i=1;i<10;i++){
+            var t1 = new THREE.TextGeometry( String(i*20), {font: font,size: 0.3,height: 0.01,} );
+            var fontModel1 = new THREE.Mesh(t1,fontMaterial); fontModel1.position.set(-0.4,0,i-0.2); fontModel1.rotation.x=-Math.PI/2; fontModel1.rotation.z=-Math.PI/2;this.mesh.add(fontModel1);
+            var t2 = new THREE.TextGeometry( String(i*10), {font: font,size: 0.3,height: 0.01,} );
+            var fontModel2 = new THREE.Mesh(t2,fontMaterial); fontModel2.position.set(i-0.2,0,10.4); fontModel2.rotation.x=-Math.PI/2;this.mesh.add(fontModel2);
+        }
+        for(i in readradio){
+            var t1 = new THREE.TextGeometry( String(readradio[i]*100)+'%', {font: font,size: 0.3,height: 0.01,} );
+            var fontModel1 = new THREE.Mesh(t1,fontMaterial); fontModel1.position.set(-1,readradio[i]*10-0.2,0); this.mesh.add(fontModel1);
+        }
+    });
+    
     for(dataset of datasetList){
         if(showInHeatmap.includes(dataset.name)){
             local = Number(dataset.local);
@@ -489,7 +516,7 @@ function generateHeatMap(){
       render();
     var controls = new THREE.OrbitControls(camera,renderer.domElement);
     controls.addEventListener('change', render);
-    document.getElementById('tt').appendChild(renderer.domElement);
+    ele.appendChild(renderer.domElement);
 }
 
 // when load the page, read indexList from file, then generate table and plots 
