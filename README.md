@@ -7,11 +7,14 @@ Jekyll theme based on [Grayscale bootstrap theme ](http://ironsummitmedia.github
 View this page [here](https://rzwen.github.io/)
 
 ## Screenshot
-#Homepage
-![screenshot](https://raw.githubusercontent.com/jeromelachaud/grayscale-theme/master/screenshot.png)
+## Homepage
+![screenshot](https://github.com/rzwen/rzwen.github.io/blob/master/screenshot/homepage.png)
 
-#HeatMap & Leaderboard
-![screenshot](https://raw.githubusercontent.com/jeromelachaud/grayscale-theme/master/screenshot.png)
+## HeatMap 
+![screenshot](https://github.com/rzwen/rzwen.github.io/blob/master/screenshot/heatmap.png)
+
+## Leaderboard
+![screenshot](https://github.com/rzwen/rzwen.github.io/blob/master/screenshot/LeaderBoard.png)
 
 =========
 For more details, read the [documentation](http://jekyllrb.com/)
