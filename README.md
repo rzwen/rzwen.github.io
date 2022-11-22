@@ -4,9 +4,13 @@ GRE Benchmarking Present Page
 Jekyll theme based on [Grayscale bootstrap theme ](http://ironsummitmedia.github.io/startbootstrap-grayscale/)
 
 ## Demo
-View this jekyll theme in action [here](https://rzwen.github.io/)
+View this page [here](https://rzwen.github.io/)
 
 ## Screenshot
+#Homepage
+![screenshot](https://raw.githubusercontent.com/jeromelachaud/grayscale-theme/master/screenshot.png)
+
+#HeatMap & Leaderboard
 ![screenshot](https://raw.githubusercontent.com/jeromelachaud/grayscale-theme/master/screenshot.png)
 
 =========
