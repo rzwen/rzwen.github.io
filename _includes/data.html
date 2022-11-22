@@ -39,18 +39,18 @@
                     <table class="sortable tables" id = "latencyTable">
                         <thead>
                             <th></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">Index</span><br><span style="font-size: 10px;">Throughput</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">Read</span><br><span style="font-size: 10px;">Read:1 Write:0</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">RW</span><br><span style="font-size: 10px;">Read:0.8 Write:0.2</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">M</span><br><span style="font-size: 10px;">Read:0.5 Write:0.5</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">WR</span><br><span style="font-size: 10px;">Read:0.2 Write:0.8</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">Write</span><br><span style="font-size: 10px;">Read:0 Write:1</span></button></th>
+                            <th style="text-align: center;" class><button onclick=""><span style="font-size: 15px;">Index</span><br><span style="font-size: 10px;">Throughput</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(2)"><span style="font-size: 15px;">Read</span><br><span style="font-size: 10px;">Read:1 Write:0</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(3)"><span style="font-size: 15px;">RW</span><br><span style="font-size: 10px;">Read:0.8 Write:0.2</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(4)"><span style="font-size: 15px;">M</span><br><span style="font-size: 10px;">Read:0.5 Write:0.5</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(5)"><span style="font-size: 15px;">WR</span><br><span style="font-size: 10px;">Read:0.2 Write:0.8</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(6)"><span style="font-size: 15px;">Write</span><br><span style="font-size: 10px;">Read:0 Write:1</span></button></th>
                         </thead>
                     </table>
                 </div>   
             </div>
             <div class="col-8">
-                <h3>Plots</h3>
+                <h3>Plots(Not Finished yet)</h3>
                 <p>Here we provide a plot of index size against lookup latency on GRE data. Indexes can be added and removed from the plot using the corresponding buttons on the leaderboard. Noted that in maximun there can be up to 7 plots presented</p>
                 <canvas id="plots"></canvas>
                 <button style="color: black ;">Clear the Area</button>

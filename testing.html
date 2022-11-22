@@ -62,27 +62,37 @@
         </div>
         
     </nav>
-    <form style="line-height:40px">
-    </form>
-    <button id="showOptions" onclick="showList()">load</button>
-    <button onclick="selectAll()">All</button>
-    <button onclick="selectRDON()">RDON</button>
-    <button onclick="selectUPAB()">UPAD</button>
-    <section id="indexList"></section>
-    <div class="table-wrapper">
-        <table class="sortable tables" id = "latencyTable">
-            <thead>
-                <th></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">Index</span><br><span style="font-size: 10px;">size</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">XS</span><br><span style="font-size: 10px;">Up to 0.01% of data</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">S</span><br><span style="font-size: 10px;">Up to 0.1% of data</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">M</span><br><span style="font-size: 10px;">Up to 1% of data</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">L</span><br><span style="font-size: 10px;">Up to 10% of data</span></button></th>
-                            <th style="text-align: center;" class><button onclick="reorder(0)"><span style="font-size: 15px;">XL</span><br><span style="font-size: 10px;">No limit</span></button></th>
-            </thead>
-        </table>
-    </div>  
-    <div style="background-color: black;">
+    <p>Select a subset of indexes to display: <button onclick="showList()" style="color:black" id="showOptions">Show Options</button></p>
+                <p>Quick selections: 
+                    <button onclick="selectAll()" style="color:black">All Indexes</button>
+                    <button onclick="selectTR()" style="color:black">Traditional Indexes</button>
+                    <button onclick="selectLE()" style="color:black">Learned Indexes</button>
+                </p>
+                <form id="indexList" style="line-height: 40px; background-color:blanchedalmond"></form>
+                <button onclick="generate()" style="color:black;">Generate Leaderboard</button>
+                <h2></h2>
+                <h3>Leaderboard</h3>
+                <p>
+                    Results below are by model. Click on a header to sort by that measure. Click on an index name to open the relevant GitHub repo. If you want to show different indexes, please choose some from above and click "Generate Leaderboard" again;
+                </p>
+                <p>
+                    This leaderboard displays the average Throughput for a randomly selected key in different read/write ratio.
+                    <br>Learned indexes are marked in <b>bold</b>.
+                </p>
+                <div class="table-wrapper">
+                    <table class="sortable tables" id = "latencyTable">
+                        <thead>
+                            <th></th>
+                            <th style="text-align: center;" class><button onclick=""><span style="font-size: 15px;">Index</span><br><span style="font-size: 10px;">Throughput</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(2)"><span style="font-size: 15px;">Read</span><br><span style="font-size: 10px;">Read:1 Write:0</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(3)"><span style="font-size: 15px;">RW</span><br><span style="font-size: 10px;">Read:0.8 Write:0.2</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(4)"><span style="font-size: 15px;">M</span><br><span style="font-size: 10px;">Read:0.5 Write:0.5</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(5)"><span style="font-size: 15px;">WR</span><br><span style="font-size: 10px;">Read:0.2 Write:0.8</span></button></th>
+                            <th style="text-align: center;" class><button onclick="reorder(6)"><span style="font-size: 15px;">Write</span><br><span style="font-size: 10px;">Read:0 Write:1</span></button></th>
+                        </thead>
+                    </table>
+                </div>   
+            </div>
     <img src="./img/GRE-Header-3.png"></div>    
     <p>Metric to display by: 
         <select readonly style="color:black" id="generateStandard">

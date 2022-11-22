@@ -4,6 +4,7 @@ let datasetList = [];
 let showenPlots = [0,1,3,4,5,8];
 let showenMaps = [0,1,3,4,5,8];
 let showInHeatmap = ['biology','covid_tweets','planet_features_osm_id','fb','books','wiki_revid','osm_cellids'];
+let sortOr = [true,true,true,true,true,true]
 
 // data[] store all test data 
 //0: LIPP , 1: BTree , 2: HOT , 3: ALEX , 4: Wormhole , 5: Artunsync , 6: XIndex , 7: FineIndex , 8: massTree , 9: PGM
@@ -147,7 +148,7 @@ function newRow1(i,stand,dataset){
 
     res = res+'<td><a target="blank" href='+indexList[i].site+'>';
     if(indexList[i].type=='Learn'){
-        res= res + '<b>'+indexList[i].name+'<b></a></td>';
+        res= res + '<b>'+indexList[i].name+'</b></a></td>';
     }
     else{
         res = res+ indexList[i].name+'</a></td>';
@@ -269,6 +270,55 @@ function datasetLi(){
     }
     if(gg.innerHTML!=undefined)
         t.appendChild(gg); 
+}
+
+//reorder table
+function reorder(col){
+    var table = document.getElementsByTagName('tbody')[0];
+    var tr = table.rows;
+    var arr = [];
+    for(var x=0;x<tr.length;x++){
+        arr[x] = tr[x];
+    }
+    for(let i=0;i<arr.length;i++){
+        for(let j = i+1;j<arr.length;j++){
+            var first = arr[i].querySelectorAll('td')[col].innerText;
+            var second = arr[j].querySelectorAll('td')[col].innerText;
+            if(first == 'NotTested'){
+                var tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+                continue;
+            }
+            if(second == 'NotTested') continue;
+            if(Number(first)<Number(second)){
+                var tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+            }
+        }
+    }
+    
+    if(sortOr[col-1]){
+        for(var x=0;x<arr.length;x++){
+            table.appendChild(arr[x]);
+        }
+        sortOr[col-1] = false;
+    }
+    else{
+        var notTested = [];
+        for(var x=arr.length-1;x>=0;x--){
+            if(arr[x].querySelectorAll('td')[col].innerText=='NotTested'){
+                notTested[notTested.length]=arr[x];
+                continue;
+            }
+            table.appendChild(arr[x]);
+        }
+        for(var x=0;x<notTested.length;x++){
+            table.appendChild(notTested[x]);
+        }
+        sortOr[col-1] = true;
+    }
 }
 
 //draw plots tut from: https://blog.csdn.net/kitty_ELF/article/details/115750534
