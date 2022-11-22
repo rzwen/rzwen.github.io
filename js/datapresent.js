@@ -3,7 +3,7 @@ let indexList = [];
 let datasetList = [];
 let showenPlots = [0,1,3,4,5,8];
 let showenMaps = [0,1,3,4,5,8];
-let showInHeatmap = ['biology','covid_tweets','planet_features_osm_id','fb','books','wiki_revid'];
+let showInHeatmap = ['biology','covid_tweets','planet_features_osm_id','fb','books','wiki_revid','osm_cellids'];
 
 // data[] store all test data 
 //0: LIPP , 1: BTree , 2: HOT , 3: ALEX , 4: Wormhole , 5: Artunsync , 6: XIndex , 7: FineIndex , 8: massTree , 9: PGM
@@ -258,6 +258,7 @@ function datasetLi(){
         }
         let g = datasetList[i].name;
         if(g.length>15){g=g.slice(0,g.indexOf('_'));} 
+        if(g=='osm'){g='history';}
         item.querySelectorAll("label")[0].setAttribute('for',datasetList[i].name); 
         item.querySelector("label").innerText =g;
         gg.appendChild(item);
@@ -436,11 +437,12 @@ function generateHeatMap(){
     camera.position.set(0,14,12);
     camera.lookAt(0,0,0)
     this.mesh = new THREE.Object3D();
-    var axesHelper = new THREE.AxesHelper(12); this.mesh.add(axesHelper);
+    // var axesHelper = new THREE.AxesHelper(12); this.mesh.add(axesHelper);
     var gridXZ = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridXZ.position.set(5,0,5); this.mesh.add(gridXZ);
     var gridXY = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridXY.position.set(5,5,0); gridXY.rotation.x = Math.PI/2.0; this.mesh.add(gridXY); 
     var gridYZ = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridYZ.position.set(10,5,5); gridYZ.rotation.z = Math.PI/2; this.mesh.add(gridYZ);
     
+    //Add text
     var loader = new THREE.FontLoader();
 
     loader.load( '../js/3-js/helvetiker_regular.typeface.json', function ( font ) {
@@ -466,11 +468,13 @@ function generateHeatMap(){
             var fontModel1 = new THREE.Mesh(t1,fontMaterial); fontModel1.position.set(-1,readradio[i]*10-0.2,0); this.mesh.add(fontModel1);
         }
     });
-    
+    var geometry = new THREE.SphereGeometry( 0.25, 32, 16 );
+    var winner = []
     for(dataset of datasetList){
         if(showInHeatmap.includes(dataset.name)){
             local = Number(dataset.local);
             global = Number(dataset.global);
+            winner[winner.length] = [dataset.name,[local,global],[]];
             for(radio of readradio){
                 maxTr = ['',0];//[indexName,AvgThroughput]
                 maxLe = ['',0];
@@ -501,10 +505,37 @@ function generateHeatMap(){
                         }
                     }
                 }
+
+                var final = maxLe[1]>maxTr[1]?maxLe[0]:maxTr[0] ; 
+                // Add point to mesh here
+                var material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
+                meshpoint = new THREE.Mesh( geometry, material );
+                meshpoint.position.set(global/1000,(1-radio)*10,local/200000);
+                this.mesh.add(meshpoint);
+                
+                winner[winner.length-1][2][readradio.indexOf(radio)] = final;
             }
+            // var fontMaterial = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
+            // var datasetname = new THREE.TextGeometry(dataset.name,{font: font,size: 0.3,height: 0.01,})
+            // var dsname = new THREE.Mesh(datasetname,fontMaterial); dsname.position.set(global/1000,10.5,local/200000); dsname.rotation.z=Math.PI/2;this.mesh.add(dsname);
         }
         else{continue;}
     }
+    loader.load( '../js/3-js/helvetiker_regular.typeface.json', function ( font ) {
+        var fontMaterial = new THREE.MeshLambertMaterial({color: 0xD3EE15});
+        var fontMaterial1 = new THREE.MeshLambertMaterial({color: 0xFFC300});
+        for(i of winner){
+            var name = i[0].length<15?i[0]:i[0].split('_')[0];
+            if(name=='osm') name = 'history';
+            var datasetname = new THREE.TextGeometry(name,{font: font,size: 0.3,height: 0.01,});
+            var dsname = new THREE.Mesh(datasetname,fontMaterial1); dsname.position.set(i[1][1]/1000,10.5,i[1][0]/200000); dsname.rotation.z=Math.PI/2;this.mesh.add(dsname);
+            console.log()
+            for(let j in new Array(5).fill(1)){
+                var indexname = new THREE.TextGeometry(i[2][j],{font: font,size: 0.2,height: 0.01,});
+                var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.25,(1-readradio[j])*10,i[1][0]/200000); this.mesh.add(ixname);
+            }
+        }
+    });
     const light = new THREE.AmbientLight();
     scene.add(light);
     scene.add(this.mesh);
