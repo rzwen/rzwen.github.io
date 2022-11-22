@@ -11,10 +11,12 @@
                 <p>Note: Throughput heatmap can show the throughput ratio between the best performing learned index and the best performing tradtional index.</p>
                 <p>The three axes in the map represent the local/global hardness of a dataset and the write ratio respectively.</p>
                 <p>The balls in the heatmap represent the best performed index inside certain datasets at particular wirte ratio. A <z style="color:red">red</z>/<z style="color:yellow;">yellow</z> ratio means a traditional index is the winner, a <z style="color:blue">blue</z> one means a learned index is the winner. The darker a ball is, the more advantage this index takes.</p>
-                <p>Hoding left-click to rotate view, Hoding right-click to translate, use mouse whell to zoom in/out</p>
+                <p>Holding left-click to rotate view, Holding right-click to translate, use mouse whell to zoom in/out.</p>
                 <button onclick="generateHeatMap()" style="color:black;">Reflesh HeatMap</button>
                 <br>
-                <div style="width: 40%;"> </div>
+                <div style="width:90%;position: center;text-align: center;float:left">
+                    <p style="float:left;width: 45%;background: linear-gradient(90deg, rgba(255,0,2,1) 0%, rgba(255,212,0,1) 100%);">Tradition</p><p style="float:left; width: 45%;background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(2,0,255,1) 100%);">Learned</p></div>
+                <div id="tt" style="width: 100%;"></div>
                 <div id="tt" style="width:90%;"></div>
             </div>
             

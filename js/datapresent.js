@@ -439,7 +439,6 @@ function getColor(Learn,Traditional){
         if(tmp.length<2)tmp='0'+tmp;
         res = '0xff'+tmp+'00';
         res = Number(res);
-        console.log(tmp);
     }
     else{
         var radi = (Learn-Traditional)/Learn;
