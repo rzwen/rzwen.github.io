@@ -427,6 +427,33 @@ const data = pointsData = [{
     context.restore();
 }
 
+// get the color of points in heatmap
+function getColor(Learn,Traditional){
+    var res;
+    if(Learn<Traditional){
+        
+        var radi = (Traditional-Learn)/Traditional;
+        var g = 2*(1-radi)* 255;
+        var tmp = g.toString(16);
+        tmp = tmp.split('.')[0]
+        if(tmp.length<2)tmp='0'+tmp;
+        res = '0xff'+tmp+'00';
+        res = Number(res);
+        console.log(tmp);
+    }
+    else{
+        var radi = (Learn-Traditional)/Learn;
+        var g = 2*(1-radi)*255;
+        var tmp = g.toString(16);
+        tmp = tmp.split('.')[0]
+        if(tmp.length<2)tmp='0'+tmp;
+        res = '0x00'+tmp+'ff';
+        res = Number(res);
+    }
+    return res;
+}
+
+// generate Heat Map
 function generateHeatMap(){
     var ele = document.getElementById('tt');
     ele.innerHTML='';
@@ -455,7 +482,7 @@ function generateHeatMap(){
         var fontModelL = new THREE.Mesh(local,fontMaterial); fontModelL.position.set(-1,0,1); fontModelL.rotation.x=-Math.PI/2;fontModelL.rotation.z=-Math.PI/2;this.mesh.add(fontModelL);
         var global = new THREE.TextGeometry( '1e2        Global hardness H (err bounds=4096)', {font: font,size: 0.25,height: 0.01} );
         var fontModelG = new THREE.Mesh(global,fontMaterial); fontModelG.position.set(0.5,0,11); fontModelG.rotation.x=-Math.PI/2;this.mesh.add(fontModelG);
-        var radio = new THREE.TextGeometry( 'write radio', {font: font,size: 0.4,height: 0.01} );
+        var radio = new THREE.TextGeometry( 'write ratio', {font: font,size: 0.4,height: 0.01} );
         var fontModelR = new THREE.Mesh(radio,fontMaterial); fontModelR.position.set(-1.5,5,0); fontModelR.rotation.z=Math.PI/2;this.mesh.add(fontModelR);
         for(i=1;i<10;i++){
             var t1 = new THREE.TextGeometry( String(i*20), {font: font,size: 0.3,height: 0.01,} );
@@ -508,12 +535,13 @@ function generateHeatMap(){
 
                 var final = maxLe[1]>maxTr[1]?maxLe[0]:maxTr[0] ; 
                 // Add point to mesh here
-                var material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
+                var color = getColor(maxLe[1],maxTr[1]);
+                var material = new THREE.MeshLambertMaterial( { color: color } );
                 meshpoint = new THREE.Mesh( geometry, material );
                 meshpoint.position.set(global/1000,(1-radio)*10,local/200000);
                 this.mesh.add(meshpoint);
                 
-                winner[winner.length-1][2][readradio.indexOf(radio)] = final;
+                winner[winner.length-1][2][readradio.indexOf(radio)] = [final,color];
             }
             // var fontMaterial = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
             // var datasetname = new THREE.TextGeometry(dataset.name,{font: font,size: 0.3,height: 0.01,})
@@ -522,7 +550,7 @@ function generateHeatMap(){
         else{continue;}
     }
     loader.load( '../js/3-js/helvetiker_regular.typeface.json', function ( font ) {
-        var fontMaterial = new THREE.MeshLambertMaterial({color: 0xD3EE15});
+        
         var fontMaterial1 = new THREE.MeshLambertMaterial({color: 0xFFC300});
         for(i of winner){
             var name = i[0].length<15?i[0]:i[0].split('_')[0];
@@ -531,7 +559,8 @@ function generateHeatMap(){
             var dsname = new THREE.Mesh(datasetname,fontMaterial1); dsname.position.set(i[1][1]/1000,10.5,i[1][0]/200000); dsname.rotation.z=Math.PI/2;this.mesh.add(dsname);
             console.log()
             for(let j in new Array(5).fill(1)){
-                var indexname = new THREE.TextGeometry(i[2][j],{font: font,size: 0.2,height: 0.01,});
+                var fontMaterial = new THREE.MeshLambertMaterial({color: i[2][j][1]});
+                var indexname = new THREE.TextGeometry(i[2][j][0],{font: font,size: 0.2,height: 0.01,});
                 var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.25,(1-readradio[j])*10,i[1][0]/200000); this.mesh.add(ixname);
             }
         }
