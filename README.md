@@ -7,10 +7,10 @@ Jekyll theme based on [Grayscale bootstrap theme ](http://ironsummitmedia.github
 View this page [here](https://rzwen.github.io/)
 
 ## Screenshot
-#Homepage
+##Homepage
 ![screenshot](https://raw.githubusercontent.com/jeromelachaud/grayscale-theme/master/screenshot.png)
 
-#HeatMap & Leaderboard
+##HeatMap & Leaderboard
 ![screenshot](https://raw.githubusercontent.com/jeromelachaud/grayscale-theme/master/screenshot.png)
 
 =========
