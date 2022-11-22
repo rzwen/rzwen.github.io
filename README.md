@@ -10,8 +10,8 @@ View this page [here](https://rzwen.github.io/)
 #Homepage
 ![screenshot](https://raw.githubusercontent.com/jeromelachaud/grayscale-theme/master/screenshot.png)
 
-#HeatMap
+#HeatMap & Leaderboard
+![screenshot](https://raw.githubusercontent.com/jeromelachaud/grayscale-theme/master/screenshot.png)
 
-#Leaderboard
 =========
 For more details, read the [documentation](http://jekyllrb.com/)
