@@ -506,7 +506,7 @@ function getColor(Learn,Traditional){
 function generateHeatMap(){
     var ele = document.getElementById('tt');
     ele.innerHTML='';
-    w = window.innerWidth*0.6;
+    w = window.innerWidth*0.65;
     h = window.innerHeight*0.8;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, w/h, 0.1 , 100000);
@@ -544,7 +544,7 @@ function generateHeatMap(){
             var fontModel1 = new THREE.Mesh(t1,fontMaterial); fontModel1.position.set(-1,readradio[i]*10-0.2,0); this.mesh.add(fontModel1);
         }
     });
-    var geometry = new THREE.SphereGeometry( 0.25, 32, 16 );
+    var geometry = new THREE.SphereGeometry( 0.2, 32, 16 );
     var winner = []
     for(dataset of datasetList){
         if(showInHeatmap.includes(dataset.name)){
@@ -610,7 +610,7 @@ function generateHeatMap(){
             for(let j in new Array(5).fill(1)){
                 var fontMaterial = new THREE.MeshLambertMaterial({color: i[2][j][1]});
                 var indexname = new THREE.TextGeometry(i[2][j][0],{font: font,size: 0.2,height: 0.01,});
-                var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.25,(1-readradio[j])*10,i[1][0]/200000); this.mesh.add(ixname);
+                var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.25,(1-readradio[j])*10-0.1,i[1][0]/200000); this.mesh.add(ixname);
             }
         }
     });
@@ -645,7 +645,7 @@ window.onload=function(){
             data[1][i] = [];
             //0: LIPP , 1: BTree , 2: HOT , 3: ALEX , 4: Wormhole , 5: Artunsync , 6: XIndex , 7: FineIndex , 8: massTree , 9: PGM
         }
-    });
+    }).then(
     fetch('./data/mt_new.csv')
     .then(res => res.text())
     .then(txt => {
@@ -694,7 +694,7 @@ window.onload=function(){
                     data[0][0][data[0][0].length]=newContain;
             }
         }
-    });
+    })).then(
     fetch('./data/st_new.csv')
     .then(res => res.text())
     .then(txt => {
@@ -749,5 +749,5 @@ window.onload=function(){
         generate();
         datasetLi();
         generateHeatMap();
-    });
+    }));
 }
