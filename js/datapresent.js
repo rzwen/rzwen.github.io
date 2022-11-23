@@ -616,7 +616,7 @@ function generateHeatMap(){
                 var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.25,(1-readradio[j])*10,i[1][0]/200000); this.mesh.add(ixname);
             }
         }
-    });
+
     const light = new THREE.AmbientLight();
     scene.add(light);
     scene.add(this.mesh);
@@ -629,6 +629,8 @@ function generateHeatMap(){
     var controls = new THREE.OrbitControls(camera,renderer.domElement);
     controls.addEventListener('change', render);
     ele.appendChild(renderer.domElement);
+    });
+    
 }
 
 //get datasetList
