@@ -640,7 +640,7 @@ function getDatasetList(){
     return new Promise((resolve,reject)=>{
         setTimeout(function(){
             resolve()
-        },0);
+        },100);
     })
 }
 
@@ -659,7 +659,7 @@ function getIndexes(){
     return new Promise((resolve,reject)=>{
         setTimeout(function(){
             resolve()
-        },0);
+        },100);
     })
 }
 
@@ -717,7 +717,7 @@ function getMtCSV(){
     return new Promise((resolve,reject)=>{
         setTimeout(function(){
             resolve()
-        },0);
+        },100);
     })
 }
 
