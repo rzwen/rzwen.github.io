@@ -504,6 +504,8 @@ function getColor(Learn,Traditional){
 
 // generate Heat Map
 function generateHeatMap(){
+    console.log(data);
+    console.log(datasetList);
     var ele = document.getElementById('tt');
     ele.innerHTML='';
     w = window.innerWidth*0.6;
@@ -544,7 +546,7 @@ function generateHeatMap(){
             var fontModel1 = new THREE.Mesh(t1,fontMaterial); fontModel1.position.set(-1,readradio[i]*10-0.2,0); this.mesh.add(fontModel1);
         }
     });
-    var geometry = new THREE.SphereGeometry( 0.2, 32, 16 );
+    var geometry = new THREE.SphereGeometry( 0.25, 32, 16 );
     var winner = []
     for(dataset of datasetList){
         if(showInHeatmap.includes(dataset.name)){
@@ -610,7 +612,7 @@ function generateHeatMap(){
             for(let j in new Array(5).fill(1)){
                 var fontMaterial = new THREE.MeshLambertMaterial({color: i[2][j][1]});
                 var indexname = new THREE.TextGeometry(i[2][j][0],{font: font,size: 0.2,height: 0.01,});
-                var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.25,(1-readradio[j])*10-0.1,i[1][0]/200000); this.mesh.add(ixname);
+                var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.25,(1-readradio[j])*10,i[1][0]/200000); this.mesh.add(ixname);
             }
         }
     });
@@ -628,132 +630,164 @@ function generateHeatMap(){
     ele.appendChild(renderer.domElement);
 }
 
-// when load the page, read indexList from file, then generate table and plots 
-window.onload=function(){
+//get datasetList
+function getDatasetList(){
     fetch('./data/datasetList.txt')
     .then(res=>res.text())
     .then(txt=> {
         datasetList=datasetList.concat(JSON.parse(txt));
-        datasets();
+    });
+    return new Promise((resolve,reject)=>{
+        setTimeout(function(){
+            resolve()
+        },100);
     })
-    .then(
-        fetch('./data/indexList.txt')
-        .then(res => res.text())
-        .then(txt => {
-            indexList=indexList.concat(JSON.parse(txt));
-            for(let i in new Array(indexList.length).fill(1)){
-                data[0][i] = [];
-                data[1][i] = [];
-                //0: LIPP , 1: BTree , 2: HOT , 3: ALEX , 4: Wormhole , 5: Artunsync , 6: XIndex , 7: FineIndex , 8: massTree , 9: PGM
-            }
-        })
-        .then(
-            fetch('./data/mt_new.csv')
-            .then(res => res.text())
-            .then(txt => {
-                var lines = txt.split(/[(\r\n)\r\n]+/);
-                for(let i in new Array(lines.length).fill(1)){
-                    if(i==0){
-                        continue;
-                    }
-                    var contains = lines[i].split(',');
-                    var newContain = [];
-                    newContain[0] = contains[1];
-                    newContain[1] = contains[2];
-                    newContain[2] = contains[3];
-                    newContain[3] = contains[4];
-                    newContain[4] = contains[5];
-                    newContain[5] = contains[6];
-                    newContain[6] = contains[7];
-                    newContain[7] = contains[8];
-                    newContain[8] = contains[22];
-                    switch(newContain[6]){
-                        case 'alexol':
-                            data[0][3][data[0][3].length] = newContain;
-                            break;
-                        case 'btreeolc':
-                            data[0][1][data[0][1].length]=newContain;
-                            break;
-                        case 'hotrowex':
-                            data[0][2][data[0][2].length]=newContain;
-                            break;
-                        case 'artolc':
-                            data[0][5][data[0][5].length]=newContain;
-                            break;
-                        case 'masstree':
-                            data[0][8][data[0][8].length]=newContain;
-                            break;
-                        case 'wormhole_u64':
-                            data[0][4][data[0][4].length]=newContain;
-                            break;
-                        case 'finedex':
-                            data[0][7][data[0][7].length]=newContain;
-                            break;
-                        case 'xindex':
-                            data[0][6][data[0][6].length]=newContain;
-                            break;
-                        case 'lippol':
-                            data[0][0][data[0][0].length]=newContain;
-                    }
-                }
-            })
-            .then(
-                fetch('./data/st_new.csv')
-                .then(res => res.text())
-                .then(txt => {
-                    var lines = txt.split(/[(\r\n)\r\n]+/);
-                    for(let i in new Array(lines.length).fill(1)){
-                        if(i==0){
-                            continue;
-                        }
-                        var contains = lines[i].split(',');
-                        var newContain = [];
-                        newContain[0] = contains[1];
-                        newContain[1] = contains[2];
-                        newContain[2] = contains[3];
-                        newContain[3] = contains[4];
-                        newContain[4] = contains[5];
-                        newContain[5] = contains[6];
-                        newContain[6] = contains[7];
-                        newContain[7] = contains[8];
-                        newContain[8] = contains[22];
-                        switch(newContain[6]){
-                            case 'alex':
-                                data[1][3][data[1][3].length] = newContain;
-                                break;
-                            case 'btree':
-                                data[1][1][data[1][1].length]=newContain;
-                                break;
-                            case 'hot':
-                                data[1][2][data[1][2].length]=newContain;
-                                break;
-                            case 'artunsync':
-                                data[1][5][data[1][5].length]=newContain;
-                                break;
-                            case 'masstree':
-                                data[1][8][data[1][8].length]=newContain;
-                                break;
-                            case 'wormhole_u64':
-                                data[1][4][data[1][4].length]=newContain;
-                                break;
-                            case 'finedex':
-                                data[1][7][data[1][7].length]=newContain;
-                                break;
-                            case 'xindex':
-                                data[1][6][data[1][6].length]=newContain;
-                                break;
-                            case 'lipp':
-                                data[1][0][data[1][0].length]=newContain;
-                                break;
-                            case 'pgm':
-                                data[1][9][data[1][9].length]=newContain;
-                        }
-                    }
-                    generate();
-                    datasetLi();
-                    generateHeatMap();
-                })
-            )
-        )
-    );
 }
+
+//get indexes
+function getIndexes(){
+    fetch('./data/indexList.txt')
+    .then(res => res.text())
+    .then(txt => {
+        indexList=indexList.concat(JSON.parse(txt));
+        for(let i in new Array(indexList.length).fill(1)){
+            data[0][i] = [];
+            data[1][i] = [];
+            //0: LIPP , 1: BTree , 2: HOT , 3: ALEX , 4: Wormhole , 5: Artunsync , 6: XIndex , 7: FineIndex , 8: massTree , 9: PGM
+        }
+    });
+    return new Promise((resolve,reject)=>{
+        setTimeout(function(){
+            resolve()
+        },100);
+    })
+}
+
+//get multi thread testing
+function getMtCSV(){
+    fetch('./data/mt_new.csv')
+    .then(res => res.text())
+    .then(txt => {
+        var lines = txt.split(/[(\r\n)\r\n]+/);
+        for(let i in new Array(lines.length).fill(1)){
+            if(i==0){
+                continue;
+            }
+            var contains = lines[i].split(',');
+            var newContain = [];
+            newContain[0] = contains[1];
+            newContain[1] = contains[2];
+            newContain[2] = contains[3];
+            newContain[3] = contains[4];
+            newContain[4] = contains[5];
+            newContain[5] = contains[6];
+            newContain[6] = contains[7];
+            newContain[7] = contains[8];
+            newContain[8] = contains[22];
+            switch(newContain[6]){
+                case 'alexol':
+                    data[0][3][data[0][3].length] = newContain;
+                    break;
+                case 'btreeolc':
+                    data[0][1][data[0][1].length]=newContain;
+                    break;
+                case 'hotrowex':
+                    data[0][2][data[0][2].length]=newContain;
+                    break;
+                case 'artolc':
+                    data[0][5][data[0][5].length]=newContain;
+                    break;
+                case 'masstree':
+                    data[0][8][data[0][8].length]=newContain;
+                    break;
+                case 'wormhole_u64':
+                    data[0][4][data[0][4].length]=newContain;
+                    break;
+                case 'finedex':
+                    data[0][7][data[0][7].length]=newContain;
+                    break;
+                case 'xindex':
+                    data[0][6][data[0][6].length]=newContain;
+                    break;
+                case 'lippol':
+                    data[0][0][data[0][0].length]=newContain;
+            }
+        }
+    });
+    return new Promise((resolve,reject)=>{
+        setTimeout(function(){
+            resolve()
+        },100);
+    })
+}
+
+//get single thread test result
+function getStCSV(){
+    fetch('./data/st_new.csv')
+    .then(res => res.text())
+    .then(txt => {
+        var lines = txt.split(/[(\r\n)\r\n]+/);
+        for(let i in new Array(lines.length).fill(1)){
+            if(i==0){
+                continue;
+            }
+            var contains = lines[i].split(',');
+            var newContain = [];
+            newContain[0] = contains[1];
+            newContain[1] = contains[2];
+            newContain[2] = contains[3];
+            newContain[3] = contains[4];
+            newContain[4] = contains[5];
+            newContain[5] = contains[6];
+            newContain[6] = contains[7];
+            newContain[7] = contains[8];
+            newContain[8] = contains[22];
+            switch(newContain[6]){
+                case 'alex':
+                    data[1][3][data[1][3].length] = newContain;
+                    break;
+                case 'btree':
+                    data[1][1][data[1][1].length]=newContain;
+                    break;
+                case 'hot':
+                    data[1][2][data[1][2].length]=newContain;
+                    break;
+                case 'artunsync':
+                    data[1][5][data[1][5].length]=newContain;
+                    break;
+                case 'masstree':
+                    data[1][8][data[1][8].length]=newContain;
+                    break;
+                case 'wormhole_u64':
+                    data[1][4][data[1][4].length]=newContain;
+                    break;
+                case 'finedex':
+                    data[1][7][data[1][7].length]=newContain;
+                    break;
+                case 'xindex':
+                    data[1][6][data[1][6].length]=newContain;
+                    break;
+                case 'lipp':
+                    data[1][0][data[1][0].length]=newContain;
+                    break;
+                case 'pgm':
+                    data[1][9][data[1][9].length]=newContain;
+            }
+        }
+        datasets();
+        generate();
+        datasetLi();
+        generateHeatMap();
+    });
+}
+
+// when load the page, read indexList from file, then generate table and plots 
+
+async function myFunction(){
+    await getDatasetList();
+    await getIndexes();
+    await getMtCSV();
+    getStCSV();
+}
+
+window.onload= myFunction();
