@@ -504,8 +504,6 @@ function getColor(Learn,Traditional){
 
 // generate Heat Map
 function generateHeatMap(){
-    console.log(data);
-    console.log(datasetList);
     var ele = document.getElementById('tt');
     console.log(ele.innerWidth);
     ele.innerHTML='';
@@ -606,12 +604,12 @@ function generateHeatMap(){
             var name = i[0].length<15?i[0]:i[0].split('_')[0];
             if(name=='osm') name = 'history';
             var datasetname = new THREE.TextGeometry(name,{font: font,size: 0.3,height: 0.01,});
-            var dsname = new THREE.Mesh(datasetname,fontMaterial1); dsname.position.set(i[1][1]/1000,10.5,i[1][0]/200000); dsname.rotation.z=Math.PI/2;this.mesh.add(dsname);
+            var dsname = new THREE.Mesh(datasetname,fontMaterial1); dsname.position.set(i[1][1]/1000+0.1,10.5,i[1][0]/200000); dsname.rotation.z=Math.PI/2;this.mesh.add(dsname);
             console.log()
             for(let j in new Array(5).fill(1)){
                 var fontMaterial = new THREE.MeshLambertMaterial({color: i[2][j][1]});
                 var indexname = new THREE.TextGeometry(i[2][j][0],{font: font,size: 0.2,height: 0.01,});
-                var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.25,(1-readradio[j])*10,i[1][0]/200000); this.mesh.add(ixname);
+                var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.3,(1-readradio[j])*10-0.1,i[1][0]/200000); this.mesh.add(ixname);
             }
         }
         const light = new THREE.AmbientLight();
