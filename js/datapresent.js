@@ -507,6 +507,7 @@ function generateHeatMap(){
     console.log(data);
     console.log(datasetList);
     var ele = document.getElementById('tt');
+    console.log(ele.innerWidth);
     ele.innerHTML='';
     w = window.innerWidth*0.6;
     h = window.innerHeight*0.8;
