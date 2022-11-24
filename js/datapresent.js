@@ -203,6 +203,7 @@ function generate(){
     if(g!=null)
         g.remove();
     let tbody = document.createElement("tbody");
+    tbody.setAttribute('style',"border:thin solid gray");
     tbody.id="latencyBody";
     for(let i in new Array(indexList.length).fill(1)){
         if(indexList[i].present=='true'){
