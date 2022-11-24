@@ -579,7 +579,7 @@ function generateHeatMap(){
     var loader = new THREE.FontLoader();
 
     loader.load( '../js/3-js/helvetiker_regular.typeface.json', function ( font ) {
-        var fontMaterial = new THREE.MeshLambertMaterial({color: 0x242526});
+        var fontMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
         var easy = new THREE.TextGeometry( 'Easy', {font: font,size: 0.5,height: 0.01,} );
         var fontModelE = new THREE.Mesh(easy,fontMaterial); fontModelE.position.set(-3,0,0); fontModelE.rotation.x=-Math.PI/2;this.mesh.add(fontModelE);
         var Difficult = new THREE.TextGeometry( 'Difficult', {font: font,size: 0.5,height: 0.01,} );
@@ -616,7 +616,7 @@ function generateHeatMap(){
         const light = new THREE.AmbientLight();
         scene.add(light);
         scene.add(this.mesh);
-        const renderer = new THREE.WebGLRenderer({alpha:true});
+        const renderer = new THREE.WebGLRenderer({background:0x000000});
         renderer.setSize(w,h);
         function render() {
             renderer.render(scene,camera);
