@@ -212,7 +212,7 @@ function generate(){
         }
     }
     document.getElementById("latencyTable").appendChild(tbody);
-    draw();
+    // draw();
 }
 
 //show the datasetList
