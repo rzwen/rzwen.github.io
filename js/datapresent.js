@@ -2,7 +2,6 @@
 let indexList = [];
 let datasetList = [];
 let showenPlots = [0,1,3,4,5,8];
-let showenMaps = [0,1,3,4,5,8];
 let showInHeatmap = ['biology','covid_tweets','planet_features_osm_id','fb','books','wiki_revid','osm_cellids'];
 let sortOr = [true,true,true,true,true,true]
 
@@ -175,6 +174,17 @@ function newRow1(i,stand,dataset){
 }
 
 function addPlot(i){
+    var b = document.getElementById('latencyBody').querySelectorAll('tr');
+    for(gg of b){
+        if(gg.querySelectorAll('td')[1].innerText==indexList[i].name){
+            if(gg.querySelectorAll('td')[2].innerText=='NotTested'){
+                return;
+            }
+            else{
+                break;
+            }
+        }
+    }
     if(showenPlots.length>6){
         showenPlots.push(i);
         let g = showenPlots.shift();
@@ -184,12 +194,14 @@ function addPlot(i){
     else{
         showenPlots.push(i);
     }
+    draw();
     let t = document.getElementById("plot"+i);
     t.innerHTML='<button onClick="removePlot('+i+')">Remove</button>';
 }
 
 function removePlot(i){
     showenPlots.splice(showenPlots.indexOf(i),1);
+    draw();
     let t = document.getElementById("plot"+i);
     t.innerHTML='<button onClick="addPlot('+i+')">Add</button>';
 }
@@ -208,12 +220,13 @@ function generate(){
     for(let i in new Array(indexList.length).fill(1)){
         if(indexList[i].present=='true'){
             let newrow = document.createElement('tr');
+            newrow.id = i;
             newrow.innerHTML=newRow1(i,t,k);
             tbody.appendChild(newrow);
         }
     }
     document.getElementById("latencyTable").appendChild(tbody);
-    // draw();
+    draw();
 }
 
 //show the datasetList
@@ -322,160 +335,66 @@ function reorder(col){
     }
 }
 
-//draw plots tut from: https://blog.csdn.net/kitty_ELF/article/details/115750534
+function getLineData(stand,dataset){
+    var res = [];
+    for(index of showenPlots){
+        var ttt = {'label':indexList[index].name,'borderColor':indexList[index].heatmap,'data':[]};
+        for(let radio in readradio){
+            let tmp = 0;
+            let num = 0;
+            for(let j in new Array(data[stand][index].length).fill(1)){
+                if(data[stand][index][j][5].indexOf(dataset)==-1){
+                    continue;
+                }
+                if(Math.abs(data[stand][index][j][0]-readradio[radio])<0.001){
+                    tmp+=parseInt(data[stand][index][j][7]);
+                    num+=1;
+                }
+            }
+            ttt.data[ttt.data.length]=parseInt(tmp/num);
+        }
+        res[res.length] = ttt;
+    }
+    return res;
+}
+
 function draw(){ 
-    const marginTop = 25;
-    const marginLeft = 40;
-    const marginBottom = 30;
-    const canvas = document.getElementById("plots");
-    canvas.width = 1000;
-    canvas.height = 600;
-    const context = canvas.getContext("2d");
-    context.strokeStyle = "rgb(255,0,0)";
-    context.lineWidth = 0.3;
-    context.scale(1, -1);
-    context.translate(marginLeft, -canvas.height + marginBottom);
-// 模拟数据
-const data = pointsData = [{
-    x: "08:00",
-    y: "153"
-},{
-    x: "09:00",
-    y: "500"
-},{
-    x: "10:00",
-    y: "12"
-},{
-    x: "11:00",
-    y: "352"
-},{
-    x: "12:00",
-    y: "223"
-},{
-    x: "01:00pm",
-    y: "402"
-},{
-    x: "02:00pm",
-    y: "412"
-},{
-    x: "03:00pm",
-    y: "522"
-},{
-    x: "04:00pm",
-    y: "85"
-}]
-// x轴刻度之间的单位宽度
-    const widthOfOne = (canvas.width - marginLeft*2)/(pointsData.length-1);
-// y轴刻度之间的单位高度
-    const heightOfOne = (canvas.height - marginBottom - marginTop)/6;
-// 保存坐标原点
-    context.save();
-// 绘制x轴和与x轴平行的刻度线
-    for(let i = 0; i < 7; i++){
-        context.beginPath();
-        context.moveTo(0, 0);
-        context.lineTo(canvas.width-marginLeft*2, 0);
-        context.closePath();
-        context.stroke();
-        context.translate(0, heightOfOne);
-    }
-    context.restore();
-
-// 保存坐标原点，后面的操作都需要
-    context.save();
-// 绘制x轴下面的小刻度线
-    for(let i = 0; i < data.length; i++){
-        context.beginPath();
-        context.moveTo(0, 0);
-        context.lineTo(0, canvas.height- marginBottom - marginTop);
-        context.closePath();
-        context.stroke();
-        context.translate(widthOfOne, 0);
-    }
-    context.restore();
-    context.save();
-//绘制X轴上的信息,因为是镜像，直接绘制文字就是倒置的，所以要再一次镜像处理还原文字
-    context.scale(1,-1);
-    context.font = "7pt Calibri";
-    for(let i = 0; i < data.length; i++){
-        context.stroke();
-        if(i==0){
-            context.translate(0,15);
-        }else{
-            context.translate(widthOfOne,0);
-        }
-        const textWidth = context.measureText(data[i].x);
-        // 保持字体中点显示在刻度的下面
-        context.fillText(data[i].x,-textWidth.width/2,0);
-    }
-    context.restore();
-
-//绘制Y轴刻度上的信息
-    context.save()
-    context.scale(1, -1);
-    context.translate(-20, 0);
-    context.font = "7pt Calibri";
-    for(let i = 0; i < 7; i++){
-        context.stroke();
-        context.fillText((100*i).toString(), 0, 0);
-        context.translate(0, -heightOfOne);
-    }
-    context.restore()
-
-// 每个点的x轴，y轴像素位置
-    const Point = {
-        createNew: function(x,y){
-            const point = {};
-            point.x = x;
-            point.y = y;
-            return point;
-        }
+    var ctx = document.getElementById('plots').getContext('2d');
+    let tt = document.getElementById("generateStandard").value;
+    let t = (tt=="Single_thread"?1:0);
+    let k = document.getElementById("dataset").value;
+    let dataset = getLineData(t,k);
+    var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["0", "20%", "50%", "80%", "100%"],
+        datasets: dataset
+    },
+    options: {
+        title: {
+        display: true,
+        text: "Throuput to Write-Ratio"
+        },
+        legend:{
+            postion: 'right'
+        },
+        scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Throughput'
+              }
+            }],
+            xAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Write_Ratio'
+                }
+              }]
+          }
     }
 
-// 单位像素高度 坐标系实际像素高度/y轴范围
-    const unitHeight = 3/8; 
-    const points = new Array(data.length);
-    for(let i = 0; i < points.length; i++){
-        points[i] = Point.createNew(0+widthOfOne*i, data[i].y*unitHeight);
-    }
-
-// 绘制折线
-    context.save();
-    context.beginPath();
-    for(let i = 0; i < points.length; i++){
-        context.lineTo(points[i].x, points[i].y);
-    }
-    context.strokeStyle="rgb(93,111,194)"
-    context.lineWidth=1
-    context.shadowBlur = 5;
-    context.stroke();
-    context.closePath();
-    context.restore();
-
-// 绘制折点
-    context.save();
-    for (let i = 0; i < points.length; i++) {
-        context.beginPath();
-        context.arc(points[i].x,points[i].y,3, 0, Math.PI * 2, true);
-        context.closePath();
-        context.fillStyle = 'rgb(49,131,186)';
-        context.shadowBlur = 5;
-        context.shadowColor = 'rgb(49,131,186)';
-        context.fill()
-    }
-    context.restore();
-
-// 在每个折点上显示数值
-    context.save();
-    context.scale(1,-1);
-    context.font = "7pt Calibri";
-    context.fillStyle = "rgb(93,111,194)";
-    for(let i = 0; i < points.length; i++){
-        context.stroke();
-        const textWidth = context.measureText(data[i].y);
-        context.fillText(data[i].y, -textWidth.width/2+points[i].x, -points[i].y-10);
-    }
-    context.restore();
+});
 }
 
 // get the color of points in heatmap
