@@ -167,6 +167,9 @@ function newRow1(i,stand,dataset){
 }
 
 function addPlot(i){
+    let tt = document.getElementById("generateStandard").value;
+    let t = (tt=="Single_thread"?1:0);
+    let k = document.getElementById("dataset").value;
     var b = document.getElementById('latencyBody').querySelectorAll('tr');
     for(gg of b){
         if(gg.querySelectorAll('td')[1].innerText==indexList[i].name){
@@ -182,14 +185,18 @@ function addPlot(i){
         showenPlots.push(i);
         let g = showenPlots.shift();
         let p = document.getElementById("plot"+g);
-        p.innerHTML='<button onClick="addPlot('+g+')">Add</button>'
+        p.innerHTML='<button onClick="addPlot('+g+')">Add</button>';
+        // $chart.data.datasets.shift();
     }
     else{
         showenPlots.push(i);
     }
+    // var added = getLineData(i,t,k)
+    // $chart.data.datasets.push(added);
+    // $chart.update();
     draw();
-    let t = document.getElementById("plot"+i);
-    t.innerHTML='<button onClick="removePlot('+i+')">Remove</button>';
+    let zz = document.getElementById("plot"+i);
+    zz.innerHTML='<button onClick="removePlot('+i+')">Remove</button>';
 }
 
 function removePlot(i){
@@ -328,9 +335,9 @@ function reorder(col){
     }
 }
 
-function getLineData(stand,dataset){
-    var res = [];
-    for(index of showenPlots){
+function getLineData(index,stand,dataset){
+    // var res = [];
+    // for(index of showenPlots){
         var ttt = {'label':indexList[index].name,'borderColor':indexList[index].heatmap,'data':[]};
         for(let radio in readradio){
             let tmp = 0;
@@ -346,48 +353,59 @@ function getLineData(stand,dataset){
             }
             ttt.data[ttt.data.length]=parseInt(tmp/num);
         }
-        res[res.length] = ttt;
-    }
-    return res;
+    //     res[res.length] = ttt;
+    // }
+    // return res;
+    return ttt
 }
 
+var chart;
+
 function draw(){ 
+    if(chart != undefined){
+        chart.data.labels = [];
+        chart.data.datasets[0].data = [];
+        chart.update();
+    }
     var ctx = document.getElementById('plots').getContext('2d');
     let tt = document.getElementById("generateStandard").value;
     let t = (tt=="Single_thread"?1:0);
     let k = document.getElementById("dataset").value;
-    let dataset = getLineData(t,k);
-    var chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ["0", "20%", "50%", "80%", "100%"],
-        datasets: dataset
-    },
-    options: {
-        title: {
-        display: true,
-        text: "Throuput to Write-Ratio"
-        },
-        legend:{
-            postion: 'right'
-        },
-        scales: {
-            yAxes: [{
-              scaleLabel: {
-                display: true,
-                labelString: 'Throughput'
-              }
-            }],
-            xAxes: [{
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Write_Ratio'
-                }
-              }]
-          }
+    let dataset = [];
+    for(index of showenPlots){
+        let tmp = getLineData(index, t , k);
+        dataset[dataset.length]=tmp;
     }
-
-});
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["0", "20%", "50%", "80%", "100%"],
+            datasets: dataset,
+        },
+        options: {
+            title: {
+            display: true,
+            text: "Throuput to Write-Ratio: "+tt
+            },
+            legend:{
+                postion: 'right'
+            },
+            scales: {
+                yAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Throughput'
+                  }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Write_Ratio'
+                    }
+                  }]
+              }
+        }
+    });
 }
 
 // get the color of points in heatmap
@@ -418,7 +436,6 @@ function getColor(Learn,Traditional){
 // generate Heat Map
 function generateHeatMap(){
     var ele = document.getElementById('tt');
-    console.log(ele.innerWidth);
     ele.innerHTML='';
     w = window.innerWidth*0.6;
     h = window.innerHeight*0.8;
