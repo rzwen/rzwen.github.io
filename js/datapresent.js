@@ -362,12 +362,11 @@ function getLineData(index,stand,dataset){
 var chart;
 
 function draw(){ 
-    if(chart != undefined){
-        chart.data.labels = [];
-        chart.data.datasets[0].data = [];
-        chart.update();
-    }
-    var ctx = document.getElementById('plots').getContext('2d');
+    document.getElementById('plotParent') && document.getElementById('plotParent').removeChild(document.getElementById('plots'));
+    var ctx = document.createElement('canvas');
+    ctx.id = 'plots';
+    ctx.className = 'chart';
+    document.getElementById('plotParent') && document.getElementById('plotParent').appendChild(ctx);
     let tt = document.getElementById("generateStandard").value;
     let t = (tt=="Single_thread"?1:0);
     let k = document.getElementById("dataset").value;
