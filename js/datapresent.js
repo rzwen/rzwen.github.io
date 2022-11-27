@@ -367,6 +367,7 @@ function draw(){
     ctx.id = 'plots';
     ctx.className = 'chart';
     document.getElementById('plotParent') && document.getElementById('plotParent').appendChild(ctx);
+    console.log(ctx);
     let tt = document.getElementById("generateStandard").value;
     let t = (tt=="Single_thread"?1:0);
     let k = document.getElementById("dataset").value;
