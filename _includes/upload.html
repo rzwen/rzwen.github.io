@@ -1,5 +1,5 @@
 <section id="upload" class="content-section text-center">
-    <div class="up-section">
+    <div class="down-section">
         <div class="container">
             <div class="col-lg-8 col-lg-offset-2">
                 <h2>Upload Your Index, Test Result and Docker image here</h2>
@@ -10,15 +10,16 @@
                         <td>Your Docker URL</td>
                         <td>Your Test Result</td>
                         <td>Your Index</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><input id="UserName" type="text"></td>
                         <td><input id="dockerImage" type="url"></td>
                         <td><input id="textResult" type="file"></td>
                         <td><input id="indexfile" type="file"></td>
+                        <td><input onclick="getFile()" type="submit"/></td>
                     </tr>
                 </table>
-                <input onclick="getFile()" type="submit"/>
             </div>
         </div>
     </div>
