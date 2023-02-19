@@ -1,1 +1,1 @@
-[{"name":"Wisnton","docker": "non" ,"test": "winston_test_1.txt","index": "test.h"}]
+[{"name":"Winston","docker":"Fine","test":"./data/Winston/2023_2_19_17_1/st_new.csv","index":"./data/Winston/2023_2_19_17_1/test.h","time":"2023_2_19_17_1"}]

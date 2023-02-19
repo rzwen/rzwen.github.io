@@ -398,3 +398,25 @@ option{
     color:black;
     background-color: burlywood;
 }
+
+#upload{
+    text-align: center;
+    height: 60px;
+    color:black;
+    background-color: burlywood;
+    border-color: #000000;
+    border: 1px solid;
+}
+
+#UserInput{
+    text-align: center;
+    height: 60px;
+    color:black;
+    background-color: burlywood;
+    border-color: #000000;
+    border: 1px solid;
+}
+
+td{
+    border: cyan 1px solid;
+}

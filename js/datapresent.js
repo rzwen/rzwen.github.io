@@ -206,7 +206,7 @@ function removePlot(i){
     t.innerHTML='<button onClick="addPlot('+i+')">Add</button>';
 }
 
-//generate leaderboard and heatmap(not done yet)
+//generate leaderboard
 function generate(){
     let tt = document.getElementById("generateStandard").value;
     let t = (tt=="Single_thread"?1:0);
@@ -716,6 +716,7 @@ async function myFunction(){
     await getIndexes();
     await getMtCSV();
     getStCSV();
+    Myfunction();
 }
 
 window.onload= myFunction();
