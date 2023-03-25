@@ -449,7 +449,7 @@ function generateHeatMap(){
     var gridXY = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridXY.position.set(5,5,0); gridXY.rotation.x = Math.PI/2.0; this.mesh.add(gridXY); 
     var gridYZ = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridYZ.position.set(10,5,5); gridYZ.rotation.z = Math.PI/2; this.mesh.add(gridYZ);
     
-    var geometry = new THREE.SphereGeometry( 0.25, 32, 16 );
+    var geometry = new THREE.BoxGeometry( 0.26, 0.26, 0.26 );
     var winner = []
     for(dataset of datasetList){
         if(showInHeatmap.includes(dataset.name)){
@@ -537,9 +537,13 @@ function generateHeatMap(){
             var dsname = new THREE.Mesh(datasetname,fontMaterial1); dsname.position.set(i[1][1]/1000+0.1,10.5,i[1][0]/200000); dsname.rotation.z=Math.PI/2;this.mesh.add(dsname);
             console.log()
             for(let j in new Array(5).fill(1)){
-                var fontMaterial = new THREE.MeshLambertMaterial({color: i[2][j][1]});
-                var indexname = new THREE.TextGeometry(i[2][j][0],{font: font,size: 0.2,height: 0.01,});
-                var ixname = new THREE.Mesh(indexname,fontMaterial); ixname.position.set(i[1][1]/1000+0.3,(1-readradio[j])*10-0.1,i[1][0]/200000); this.mesh.add(ixname);
+                var fontMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
+                var indexmark = new THREE.TextGeometry(i[2][j][0][0],{font: font,size: 0.15,height: 0.0001,});
+                var ixname = new THREE.Mesh(indexmark,fontMaterial); ixname.position.set(i[1][1]/1000-0.06,(1-readradio[j])*10-0.07,i[1][0]/200000+0.13); this.mesh.add(ixname);
+                var ixname2 = new THREE.Mesh(indexmark,fontMaterial); ixname2.position.set(i[1][1]/1000+0.05,(1-readradio[j])*10-0.07,i[1][0]/200000-0.13); ixname2.rotation.y=-Math.PI; this.mesh.add(ixname2);
+                var ixname3 = new THREE.Mesh(indexmark,fontMaterial); ixname3.position.set(i[1][1]/1000-0.13,(1-readradio[j])*10-0.07,i[1][0]/200000-0.05); ixname3.rotation.y=-Math.PI/2; this.mesh.add(ixname3);
+                var ixname4 = new THREE.Mesh(indexmark,fontMaterial); ixname4.position.set(i[1][1]/1000+0.13,(1-readradio[j])*10-0.07,i[1][0]/200000+0.06); ixname4.rotation.y=Math.PI/2; this.mesh.add(ixname4);
+                //var ixname5 = new THREE.Mesh(indexmark,fontMaterial); ixname5.position.set(i[1][1]/1000-0.06,(1-readradio[j])*10+0.1,i[1][0]/200000+0.07); ixname5.rotation.x=-Math.PI/2; this.mesh.add(ixname5);
             }
         }
         const light = new THREE.AmbientLight();
