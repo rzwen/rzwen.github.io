@@ -600,7 +600,7 @@ function generateHeatMap(){
           render();
         var controls = new THREE.OrbitControls(camera,renderer.domElement);
         controls.addEventListener('change', render);
-        camera.position.set( -3, 6, 10 );
+        camera.position.set( -3, 7, 9 );
         controls.update();
         ele.appendChild(renderer.domElement);
     
