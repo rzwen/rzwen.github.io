@@ -441,15 +441,18 @@ function generateHeatMap(){
     h = window.innerHeight*0.8;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, w/h, 0.1 , 100000);
-    camera.position.set(0,14,12);
-    camera.lookAt(0,0,0)
     this.mesh = new THREE.Object3D();
     // var axesHelper = new THREE.AxesHelper(12); this.mesh.add(axesHelper);
-    var gridXZ = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridXZ.position.set(5,0,5); this.mesh.add(gridXZ);
-    var gridXY = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridXY.position.set(5,5,0); gridXY.rotation.x = Math.PI/2.0; this.mesh.add(gridXY); 
-    var gridYZ = new THREE.GridHelper(10, 10, 0x7BB7A4, 0x7BB7A4); gridYZ.position.set(10,5,5); gridYZ.rotation.z = Math.PI/2; this.mesh.add(gridYZ);
+    var gridXZ = new THREE.GridHelper(8, 8, 0x7BB7A4, 0x7BB7A4); gridXZ.position.set(4,0,4); this.mesh.add(gridXZ);
+    var gridXY = new THREE.GridHelper(6, 6, 0x7BB7A4, 0x7BB7A4); gridXY.position.set(3,3,0); gridXY.rotation.x = Math.PI/2.0; this.mesh.add(gridXY);
+    var gridXY1 = new THREE.GridHelper(2, 2, 0x7BB7A4, 0x7BB7A4); gridXY1.position.set(7,1,0); gridXY1.rotation.x = Math.PI/2.0; this.mesh.add(gridXY1); 
+    var gridXY2 = new THREE.GridHelper(2, 2, 0x7BB7A4, 0x7BB7A4); gridXY2.position.set(7,3,0); gridXY2.rotation.x = Math.PI/2.0; this.mesh.add(gridXY2); 
+    var gridXY3 = new THREE.GridHelper(2, 2, 0x7BB7A4, 0x7BB7A4); gridXY3.position.set(7,5,0); gridXY3.rotation.x = Math.PI/2.0; this.mesh.add(gridXY3); 
+    var gridYZ = new THREE.GridHelper(6, 6, 0x7BB7A4, 0x7BB7A4); gridYZ.position.set(8,3,3); gridYZ.rotation.z = Math.PI/2; this.mesh.add(gridYZ);
+    var gridYZ1 = new THREE.GridHelper(2, 2, 0x7BB7A4, 0x7BB7A4); gridYZ1.position.set(8,1,7); gridYZ1.rotation.z = Math.PI/2; this.mesh.add(gridYZ1);
+    var gridYZ2 = new THREE.GridHelper(2, 2, 0x7BB7A4, 0x7BB7A4); gridYZ2.position.set(8,3,7); gridYZ2.rotation.z = Math.PI/2; this.mesh.add(gridYZ2);
+    var gridYZ3 = new THREE.GridHelper(2, 2, 0x7BB7A4, 0x7BB7A4); gridYZ3.position.set(8,5,7); gridYZ3.rotation.z = Math.PI/2; this.mesh.add(gridYZ3);
     
-    var geometry = new THREE.BoxGeometry( 0.26, 0.26, 0.26 );
     var winner = []
     for(dataset of datasetList){
         if(showInHeatmap.includes(dataset.name)){
@@ -490,9 +493,41 @@ function generateHeatMap(){
                 var final = maxLe[1]>maxTr[1]?maxLe[0]:maxTr[0] ; 
                 // Add point to mesh here
                 var color = getColor(maxLe[1],maxTr[1]);
+                var geometry;
+                switch(final){
+                    case 'ALEX':
+                        geometry =new THREE.BoxGeometry( 0.3, 0.3, 0.3 );
+                        break;
+                    case 'LIPP':
+                        geometry =new THREE.SphereGeometry(0.2);
+                        break;
+                    case 'PGM':
+                        geometry =new THREE.OctahedronGeometry(0.26);
+                        break;
+                    case 'Artunsync':
+                        geometry =new THREE.TetrahedronGeometry(0.26,0);
+                        break;
+                    default:
+                        geometry =new THREE.CylinderGeometry( 0.15, 0.15, 0.3,100 );
+                        console.log("others");
+                }
+                
                 var material = new THREE.MeshLambertMaterial( { color: color } );
                 meshpoint = new THREE.Mesh( geometry, material );
-                meshpoint.position.set(global/1000,(1-radio)*10,local/200000);
+                var y = 0;
+                switch(radio){
+                    case 0:
+                        y = 5;break;
+                    case 0.2:
+                        y = 4;break;
+                    case 0.5:
+                        y = 3;break;
+                    case 0.8:
+                        y = 2;break;
+                    case 1:
+                        y = 1;break;
+                }
+                meshpoint.position.set(global/1000,y,local/200000);
                 this.mesh.add(meshpoint);
                 
                 winner[winner.length-1][2][readradio.indexOf(radio)] = [final,color];
@@ -509,41 +544,49 @@ function generateHeatMap(){
 
     loader.load( '../js/3-js/helvetiker_regular.typeface.json', function ( font ) {
         var fontMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
-        var easy = new THREE.TextGeometry( 'Easy', {font: font,size: 0.5,height: 0.01,} );
+        var easy = new THREE.TextGeometry( 'Easy', {font: font,size: 0.4,height: 0.01,} );
         var fontModelE = new THREE.Mesh(easy,fontMaterial); fontModelE.position.set(-3,0,0); fontModelE.rotation.x=-Math.PI/2;this.mesh.add(fontModelE);
-        var Difficult = new THREE.TextGeometry( 'Difficult', {font: font,size: 0.5,height: 0.01,} );
-        var fontModelD = new THREE.Mesh(Difficult,fontMaterial); fontModelD.position.set(9.5,0,11); fontModelD.rotation.x=-Math.PI/2;this.mesh.add(fontModelD);
+        var Difficult = new THREE.TextGeometry( 'Difficult', {font: font,size: 0.4,height: 0.01,} );
+        var fontModelD = new THREE.Mesh(Difficult,fontMaterial); fontModelD.position.set(7.5,0,9); fontModelD.rotation.x=-Math.PI/2;this.mesh.add(fontModelD);
         var local = new THREE.TextGeometry( '1e4      Local hardness H (err bounds=32)', {font: font,size: 0.25,height: 0.01} );
         var fontModelL = new THREE.Mesh(local,fontMaterial); fontModelL.position.set(-1,0,1); fontModelL.rotation.x=-Math.PI/2;fontModelL.rotation.z=-Math.PI/2;this.mesh.add(fontModelL);
         var global = new THREE.TextGeometry( '1e2        Global hardness H (err bounds=4096)', {font: font,size: 0.25,height: 0.01} );
-        var fontModelG = new THREE.Mesh(global,fontMaterial); fontModelG.position.set(0.5,0,11); fontModelG.rotation.x=-Math.PI/2;this.mesh.add(fontModelG);
+        var fontModelG = new THREE.Mesh(global,fontMaterial); fontModelG.position.set(0,0,9); fontModelG.rotation.x=-Math.PI/2;this.mesh.add(fontModelG);
         var radio = new THREE.TextGeometry( 'write ratio', {font: font,size: 0.4,height: 0.01} );
-        var fontModelR = new THREE.Mesh(radio,fontMaterial); fontModelR.position.set(-1.5,5,0); fontModelR.rotation.z=Math.PI/2;this.mesh.add(fontModelR);
-        for(i=1;i<10;i++){
+        var fontModelR = new THREE.Mesh(radio,fontMaterial); fontModelR.position.set(-1.5,3,0); fontModelR.rotation.z=Math.PI/2;this.mesh.add(fontModelR);
+        for(i=1;i<8;i++){
             var t1 = new THREE.TextGeometry( String(i*20), {font: font,size: 0.3,height: 0.01,} );
             var fontModel1 = new THREE.Mesh(t1,fontMaterial); fontModel1.position.set(-0.4,0,i-0.2); fontModel1.rotation.x=-Math.PI/2; fontModel1.rotation.z=-Math.PI/2;this.mesh.add(fontModel1);
             var t2 = new THREE.TextGeometry( String(i*10), {font: font,size: 0.3,height: 0.01,} );
-            var fontModel2 = new THREE.Mesh(t2,fontMaterial); fontModel2.position.set(i-0.2,0,10.4); fontModel2.rotation.x=-Math.PI/2;this.mesh.add(fontModel2);
+            var fontModel2 = new THREE.Mesh(t2,fontMaterial); fontModel2.position.set(i-0.2,0,8.4); fontModel2.rotation.x=-Math.PI/2;this.mesh.add(fontModel2);
         }
-        for(i in readradio){
-            var t1 = new THREE.TextGeometry( String(readradio[i]*100)+'%', {font: font,size: 0.3,height: 0.01,} );
-            var fontModel1 = new THREE.Mesh(t1,fontMaterial); fontModel1.position.set(-1,readradio[i]*10-0.2,0); this.mesh.add(fontModel1);
+        for(i=1;i<=5;i++){
+            var t1 = new THREE.TextGeometry( String(readradio[5-i]*100)+'%', {font: font,size: 0.3,height: 0.01,} );
+            var fontModel1 = new THREE.Mesh(t1,fontMaterial); fontModel1.position.set(-1,i-0.2,0); this.mesh.add(fontModel1);
         }
         var fontMaterial1 = new THREE.MeshLambertMaterial({color: 0xFFC300});
         for(i of winner){
             var name = i[0].length<15?i[0]:i[0].split('_')[0];
             if(name=='osm') name = 'history';
             var datasetname = new THREE.TextGeometry(name,{font: font,size: 0.3,height: 0.01,});
-            var dsname = new THREE.Mesh(datasetname,fontMaterial1); dsname.position.set(i[1][1]/1000+0.1,10.5,i[1][0]/200000); dsname.rotation.z=Math.PI/2;this.mesh.add(dsname);
-            console.log()
+            var dsname = new THREE.Mesh(datasetname,fontMaterial1); dsname.position.set(i[1][1]/1000+0.1,5.5,i[1][0]/200000); dsname.rotation.z=Math.PI/2;this.mesh.add(dsname);
             for(let j in new Array(5).fill(1)){
-                var fontMaterial = new THREE.MeshLambertMaterial({color: 0x000000});
-                var indexmark = new THREE.TextGeometry(i[2][j][0][0],{font: font,size: 0.15,height: 0.0001,});
-                var ixname = new THREE.Mesh(indexmark,fontMaterial); ixname.position.set(i[1][1]/1000-0.06,(1-readradio[j])*10-0.07,i[1][0]/200000+0.13); this.mesh.add(ixname);
-                var ixname2 = new THREE.Mesh(indexmark,fontMaterial); ixname2.position.set(i[1][1]/1000+0.05,(1-readradio[j])*10-0.07,i[1][0]/200000-0.13); ixname2.rotation.y=-Math.PI; this.mesh.add(ixname2);
-                var ixname3 = new THREE.Mesh(indexmark,fontMaterial); ixname3.position.set(i[1][1]/1000-0.13,(1-readradio[j])*10-0.07,i[1][0]/200000-0.05); ixname3.rotation.y=-Math.PI/2; this.mesh.add(ixname3);
-                var ixname4 = new THREE.Mesh(indexmark,fontMaterial); ixname4.position.set(i[1][1]/1000+0.13,(1-readradio[j])*10-0.07,i[1][0]/200000+0.06); ixname4.rotation.y=Math.PI/2; this.mesh.add(ixname4);
-                //var ixname5 = new THREE.Mesh(indexmark,fontMaterial); ixname5.position.set(i[1][1]/1000-0.06,(1-readradio[j])*10+0.1,i[1][0]/200000+0.07); ixname5.rotation.x=-Math.PI/2; this.mesh.add(ixname5);
+                if(i[2][j][0]=='LIPP'||i[2][j][0]=='ALEX'||i[2][j][0]=='PGM'||i[2][j][0]=='Artunsync') continue;
+                var fontMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
+                var indexmark = new THREE.TextGeometry(i[2][j][0],{font: font,size: 0.15,height: 0.0001,});
+                switch(readradio[j]){
+                    case 0:
+                        y = 5;break;
+                    case 0.2:
+                        y = 4;break;
+                    case 0.5:
+                        y = 3; break;
+                    case 0.8:
+                        y = 2;break;
+                    case 1:
+                        y = 1;break;
+                }
+                var ixname = new THREE.Mesh(indexmark,fontMaterial); ixname.position.set(i[1][1]/1000+0.2,y-0.07,i[1][0]/200000); this.mesh.add(ixname);
             }
         }
         const light = new THREE.AmbientLight();
@@ -557,6 +600,8 @@ function generateHeatMap(){
           render();
         var controls = new THREE.OrbitControls(camera,renderer.domElement);
         controls.addEventListener('change', render);
+        camera.position.set( -3, 6, 10 );
+        controls.update();
         ele.appendChild(renderer.domElement);
     
     });
