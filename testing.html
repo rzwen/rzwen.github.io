@@ -190,19 +190,41 @@
         <option value="Write Only">Write Only</option></select></p>
         <div id="cores"><canvas id="coresPlots" class="chart" style="width:80%"></canvas></div>
         <p>2. Memory Space Efficiency:</p>
-                <p>Dataset:s <select id="dataset2" onchange="drawMem()"> 
-                    <option value="covid" selected>covid</option>
-                    <option value="biology">biology</option>
-                    <option value="libraries">libraries</option>
-                    <option value="planet_features">planet_features</option>
-                    <option value="wise_all_sky_data">wise_all_sky_data</option>
-                    <option value="books">books</option>
-                    <option value="fb">fb</option>
-                    <option value="stovf_vote_id">stovf_vote_id</option>
-                    <option value="history">history</option>
-                    <option value="osm_cellids">osm_cellids</option>
-                </select></p>
-                <div id="memory"><canvas id="memoryPlots" class="chart" style="width:60%"></canvas></div>
+        <p>Dataset: 
+            <select id="dataset2" onchange="drawMem()"> 
+                <option value="covid" selected>covid</option>
+                <option value="biology">biology</option>
+                <option value="libraries">libraries</option>
+                <option value="planet_features">planet_features</option>
+                <option value="wise_all_sky_data">wise_all_sky_data</option>
+                <option value="books">books</option>
+                <option value="fb">fb</option>
+                <option value="stovf_vote_id">stovf_vote_id</option>
+                <option value="history">history</option>
+                <option value="osm_cellids">osm_cellids</option>
+            </select>
+        </p>
+        <div id="memory"><canvas id="memoryPlots" class="chart" style="width:80%"></canvas></div>
+        <p>3. Tail Latency:</p>
+        <p>The <select id="insert/lookup" onchange="drawLat()">
+            <option value=lookup selected>lookup</option>
+            <option value=insert>insert</option>
+        </select> operation in  Dataset 
+            <select id="dataset3" onchange="drawLat()"> 
+                <option value="covid" selected>covid</option>
+                <option value="biology">biology</option>
+                <option value="libraries">libraries</option>
+                <option value="osm_cellids">osm_cellids</option>
+            </select>
+            of <select id="latencyRate" onchange="drawLat()">
+                <option value='50%'>50%</option>
+                <option value='90%'>90%</option>
+                <option value='99%'>99%</option>
+                <option value='99.9%' selected>99.9%</option>
+                <option value='99.99%'>99.99%</option> 
+            </select> latency in <select id="corrr" onchange="drawLat()"><option value='single core' selected>single core</option><option value='24 cores'>24 cores</option></select>
+        </p>
+        <div id="lat"><canvas id="latPlots" class="chart" style="width:60%"></canvas></div>
     </div>
     <script src="/js/3-js/three.min.js"></script>
     <script src="/js/3-js/OrbitControls.js"></script>

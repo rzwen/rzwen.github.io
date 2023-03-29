@@ -19,6 +19,18 @@ memory[3] = []; //art
 memory[4] = []; //btree
 memory[5] = []; //hot
 
+let lat = [];
+lat[0] = [];//art
+lat[1] = [];//hot
+lat[2] = [];//btree
+lat[3] = [];//wormhole
+lat[4] = [];//masstree
+lat[5] = [];//alex
+lat[6] = [];//lipp
+lat[7] = [];//xindex
+lat[8] = [];//finedex
+lat[9] = [];//pgm
+
 let readradio = [1,0.8,0.5,0.2,0];
 
 let heatmap=[]
@@ -241,6 +253,7 @@ function generate(){
     draw();
     drawCores();
     drawMem();
+    drawLat();
 }
 
 //show the datasetList
@@ -368,14 +381,16 @@ function getLineData(index,stand,dataset){
                     num+=1;
                 }
             }
-            ttt.data[ttt.data.length]=parseInt(tmp/num);
+            var kg = (tmp/num)/1000000
+            ttt.data[ttt.data.length]=kg.toFixed(3);
         }
     return ttt
 }
 
-var chart;
+
 
 function draw(){ 
+    var chart;
     document.getElementById('plotParent') && document.getElementById('plotParent').removeChild(document.getElementById('plots'));
     var ctx = document.createElement('canvas');
     ctx.id = 'plots';
@@ -407,7 +422,7 @@ function draw(){
                 yAxes: [{
                   scaleLabel: {
                     display: true,
-                    labelString: 'Throughput'
+                    labelString: 'Throughput (Mbps)'
                   }
                 }],
                 xAxes: [{
@@ -437,13 +452,15 @@ function getLineDataCores(index,Ratio,dataset){
                 num+=1;
             }
         }
-        ttt.data[ttt.data.length]=parseInt(tmp/num);
+        var kg = (tmp/num)/1000000
+        ttt.data[ttt.data.length]=kg.toFixed(3);
     }
     return ttt;
 }
 
 
 function drawCores(){ 
+    var chart;
     document.getElementById('cores') && document.getElementById('cores').removeChild(document.getElementById('coresPlots'));
     var ctx = document.createElement('canvas');
     ctx.id = 'coresPlots';
@@ -475,7 +492,7 @@ function drawCores(){
                 yAxes: [{
                   scaleLabel: {
                     display: true,
-                    labelString: tt+' Throughput'
+                    labelString: tt+' Throughput (Mbps)'
                   }
                 }],
                 xAxes: [{
@@ -498,15 +515,18 @@ function getLineDataMem(dataset){
             if(memory[index][j][0].indexOf(dataset)==-1){
                 continue;
             }
-            tmp+=parseInt(memory[index][j][2]);
+            tmp +=parseInt(memory[index][j][2]);
             num+=1;
         }
-        ttt[ttt.length]=parseInt(tmp/num);
+        
+        var kk =(tmp/num)/1000000000;
+        ttt[ttt.length] = kk.toFixed(3);
     }
     return ttt;
 }
 
 function drawMem(){
+    var chart;
     document.getElementById('memory') && document.getElementById('memory').removeChild(document.getElementById('memoryPlots'));
     var ctx = document.createElement('canvas');
     ctx.id = 'memoryPlots';
@@ -517,7 +537,6 @@ function drawMem(){
     let data = {
         labels: labell,
         datasets: [{
-          label: 'My First Dataset',
           data: getLineDataMem(tt),
           backgroundColor: [
             'rgba(0,0,255,0.6)',
@@ -547,7 +566,7 @@ function drawMem(){
             text: tt
             },
             legend:{
-                postion: 'right'
+               display: false,
             },
             scales: {
                 yAxes: [{
@@ -563,6 +582,122 @@ function drawMem(){
                     scaleLabel: {
                       display: true,
                       labelString: 'Indexes'
+                    }
+                  }]
+              }
+        }
+    });
+}
+
+function getLineDataLat(op,ds,lr,co){
+    var ttt = [];
+    var stand = op=='lookup'?1:0;
+    var cores = '1';
+    if(co!='single core'){
+        cores = '24';
+    } 
+    var latt = ['50%','90%','99%','99.9%','99.99%'];
+    var ii = latt.indexOf(lr) + 4;
+    for(let index =0;index<9; index++){
+        let tmp = 0;
+        let num = 0;
+        for(let j in new Array(lat[index].length).fill(1)){
+            if(lat[index][j][0]!=stand){
+                continue;
+            }
+            
+            if(!lat[index][j][1].includes(ds)){
+                continue;
+            }
+            if(lat[index][j][3]!=cores){
+                continue;
+            }console.log(lat[index][j][3]);
+            
+            tmp +=parseInt(lat[index][j][ii]);
+            num+=1;
+        }
+        var kk =parseInt(tmp/num);
+        ttt[ttt.length] = kk;
+    }
+    if(co=='single core'){
+        index = 9;
+        let tmp = 0;
+        let num = 0;
+        for(let j in new Array(lat[index].length).fill(1)){
+            
+            if(lat[index][j][0]!=stand){
+                continue;
+            }
+            if(!lat[index][j][1].includes(ds)){
+                continue;
+            }
+            if(lat[index][j][3]!=cores){
+                continue;
+            }
+            tmp +=parseInt(lat[index][j][ii]);
+            num+=1;
+        }
+        var kk =parseInt(tmp/num);
+        ttt[ttt.length] = kk;
+    }
+    return ttt;
+}
+
+function drawLat(){
+    var chart;
+    document.getElementById('lat') && document.getElementById('lat').removeChild(document.getElementById('latPlots'));
+    var ctx = document.createElement('canvas');
+    ctx.id = 'latPlots';
+    ctx.className = 'chart';
+    document.getElementById('lat') && document.getElementById('lat').appendChild(ctx);
+    let op = document.getElementById("insert/lookup").value;
+    let ds = document.getElementById("dataset3").value;
+    let lr = document.getElementById("latencyRate").value;
+    let co = document.getElementById("corrr").value;
+    let label = ["Artunsync", "HOT","BTree","Wormhole", "massTree", "ALEX","LIPP","XIndex","Finedex"];
+    let back = ['rgba(255,0,255,0.5)','rgba(255,255,0,0.5)','rgba(0,255,0,0.5)','rgba(0,255,255,0.5)','rgba(171,171,0,0.5)',
+        'rgba(0,0,255,0.5)','rgba(255,0,0,0.5)','rgba(225,171,0,0.5)','rgba(102,102,0,0.5)'];
+    let bold = ['rgb(255,0,255)','rgb(255,255,0)','rgb(0,255,0)','rgb(0,255,255)','rgb(171,171,0)',
+    'rgb(0,0,255)','rgb(255,0,0)','rgb(225,171,0)','rgb(102,102,0)'];
+    if(co=='single core'){
+        label[9] = "PGM";
+        back[9] = 'rgba(125,0,255,0.5)';
+        bold[9] = 'rgb(125,0,255)';
+    }
+    let data = {
+        labels: label,
+        datasets: [{
+          data: getLineDataLat(op,ds,lr,co),
+          backgroundColor: back,
+          borderColor: bold,
+          borderWidth: 0.7
+        }]
+      };
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            title: {
+            display: true,
+            text: ds
+            },
+            legend:{
+               display: false,
+            },
+            scales: {
+                yAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: lr+ ' (ns)',
+                  },
+                  ticks: {
+                    beginAtZero:true
+                }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Tail latency of '+op + ' operation ('+co+')'
                     }
                   }]
               }
@@ -924,7 +1059,78 @@ function getStCSV(){
 
 // when load the page, read indexList from file, then generate table and plots 
 
-function getMemory(){
+async function getlat(){
+    fetch('./data/latency_new.csv')
+    .then(res => res.text())
+    .then(txt => {
+        var lines = txt.split(/[(\r\n)\r\n]+/);
+        for(let i in new Array(lines.length).fill(1)){
+            if(i==0){
+                continue;
+            }
+            var contains = lines[i].split(',');
+            var newContain = [];
+            newContain[0] = contains[1];
+            newContain[1] = contains[6];
+            newContain[2] = contains[7];
+            newContain[3] = contains[11];
+            newContain[4] = contains[13];
+            newContain[5] = contains[14];
+            newContain[6] = contains[15];
+            newContain[7] = contains[16];
+            newContain[8] = contains[17];
+            switch(newContain[2]){
+                case 'alex':
+                    lat[5][lat[5].length] = newContain;
+                    break;
+                case 'alexol':
+                    lat[5][lat[5].length] = newContain;
+                    break;
+                case 'btree':
+                    lat[2][lat[2].length]=newContain;
+                    break;
+                case 'btreeolc':
+                    lat[2][lat[2].length]=newContain;
+                    break;
+                case 'hot':
+                    lat[1][lat[1].length]=newContain;
+                    break;
+                case 'hotrowex':
+                    lat[1][lat[1].length]=newContain;
+                    break;
+                case 'artunsync':
+                    lat[0][lat[0].length]=newContain;
+                    break;
+                case 'artolc':
+                    lat[0][lat[0].length]=newContain;
+                    break;
+                case 'masstree':
+                    lat[4][lat[4].length]=newContain;
+                    break;
+                case 'wormhole_u64':
+                    lat[3][lat[3].length]=newContain;
+                    break;
+                case 'finedex':
+                    lat[8][lat[8].length]=newContain;
+                    break;
+                case 'xindex':
+                    lat[7][lat[7].length]=newContain;
+                    break;
+                case 'lipp':
+                    lat[6][lat[6].length]=newContain;
+                    break;
+                case 'lippol':
+                    lat[6][lat[6].length]=newContain;
+                    break;    
+                case 'pgm':
+                    lat[9][lat[9].length]=newContain;
+            }
+        }
+        
+    });
+}
+
+async function getMemory(){
     fetch('./data/mem_new.csv')
     .then(res => res.text())
     .then(txt => {
@@ -967,6 +1173,7 @@ async function myFunction(){
     await getIndexes();
     await getMtCSV();
     await getMemory();
+    await getlat();
     getStCSV();
     Myfunction();
 }

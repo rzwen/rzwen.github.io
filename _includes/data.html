@@ -80,6 +80,26 @@
                     <option value="osm_cellids">osm_cellids</option>
                 </select></p>
                 <div id="memory"><canvas id="memoryPlots" class="chart" style="width:60%"></canvas></div>
+                <p>3. Tail Latency:</p>
+                <p>The <select id="insert/lookup" onchange="drawLat()">
+                    <option value=1 selected>lookup</option>
+                    <option value=0>insert</option>
+                </select> operation in  Dataset 
+                    <select id="dataset2" onchange="drawLat()"> 
+                        <option value="covid" selected>covid</option>
+                        <option value="biology">biology</option>
+                        <option value="libraries">libraries</option>
+                        <option value="osm_cellids">osm_cellids</option>
+                    </select>
+                    of <select id="insert/lookup" onchange="drawLat()">
+                        <option value=1>50%</option>
+                        <option value=0>90%</option>
+                        <option value=0>99%</option>
+                        <option value=0 selected>99.9%</option>
+                        <option value=0>99.99%</option> Latency
+                    </select>
+                </p>
+                <div id="lat"><canvas id="latPlots" class="chart" style="width:60%"></canvas></div>
             </div>
         </div>
     </div>
