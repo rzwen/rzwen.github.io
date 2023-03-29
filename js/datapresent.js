@@ -152,6 +152,9 @@ function newRow1(i,stand,dataset){
             if(data[stand][i][j][5].indexOf(dataset)==-1){
                 continue;
             }
+            if(stand==0&&data[stand][index][j][9]!='24'){
+                continue;
+            }
             if(Math.abs(data[stand][i][j][0]-readradio[radio])<0.001){
                 tmp+=parseInt(data[stand][i][j][7]);
                 num+=1;
@@ -227,6 +230,7 @@ function generate(){
     }
     document.getElementById("latencyTable").appendChild(tbody);
     draw();
+    drawCores();
 }
 
 //show the datasetList
@@ -346,6 +350,9 @@ function getLineData(index,stand,dataset){
                 if(data[stand][index][j][5].indexOf(dataset)==-1){
                     continue;
                 }
+                if(stand==0&&data[stand][index][j][9]!='24'){
+                    continue;
+                }
                 if(Math.abs(data[stand][index][j][0]-readradio[radio])<0.001){
                     tmp+=parseInt(data[stand][index][j][7]);
                     num+=1;
@@ -353,9 +360,6 @@ function getLineData(index,stand,dataset){
             }
             ttt.data[ttt.data.length]=parseInt(tmp/num);
         }
-    //     res[res.length] = ttt;
-    // }
-    // return res;
     return ttt
 }
 
@@ -367,7 +371,6 @@ function draw(){
     ctx.id = 'plots';
     ctx.className = 'chart';
     document.getElementById('plotParent') && document.getElementById('plotParent').appendChild(ctx);
-    console.log(ctx);
     let tt = document.getElementById("generateStandard").value;
     let t = (tt=="Single_thread"?1:0);
     let k = document.getElementById("dataset").value;
@@ -401,6 +404,74 @@ function draw(){
                     scaleLabel: {
                       display: true,
                       labelString: 'Write_Ratio'
+                    }
+                  }]
+              }
+        }
+    });
+}
+
+function getLineDataCores(index,Ratio,dataset){
+    var ttt = {'label':indexList[index].name,'borderColor':indexList[index].heatmap,'data':[]};
+    var cores = ['2','4','8','16','24'];
+    for(radio of cores){
+        let tmp = 0;
+        let num = 0;
+        for(let j in new Array(data[0][index].length).fill(1)){
+            if(data[0][index][j][5].indexOf(dataset)==-1){
+                continue;
+            }
+            if(Math.abs(data[0][index][j][0]-Ratio)<0.001 && data[0][index][j][9]==radio){
+                
+                tmp+=parseInt(data[0][index][j][7]);
+                num+=1;
+            }
+        }
+        ttt.data[ttt.data.length]=parseInt(tmp/num);
+    }
+    return ttt;
+}
+
+
+function drawCores(){ 
+    document.getElementById('cores') && document.getElementById('cores').removeChild(document.getElementById('coresPlots'));
+    var ctx = document.createElement('canvas');
+    ctx.id = 'coresPlots';
+    ctx.className = 'chart';
+    document.getElementById('cores') && document.getElementById('cores').appendChild(ctx);
+    let tt = document.getElementById("ReadRatio").value;
+    let t = (tt=="Read Only"?1:tt=="Write Only"?0:0.5);
+    let k = document.getElementById("dataset1").value;
+    let dataset = [];
+    for(index =0;index<9;index++){
+        let tmp = getLineDataCores(index, t , k);
+        dataset[dataset.length]=tmp;
+    }
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["2", "4", "8", "16", "24"],
+            datasets: dataset,
+        },
+        options: {
+            title: {
+            display: true,
+            text: "Throuput in Dataset: "+k
+            },
+            legend:{
+                postion: 'right'
+            },
+            scales: {
+                yAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: tt+' Throughput'
+                  }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Cores'
                     }
                   }]
               }
@@ -661,6 +732,7 @@ function getMtCSV(){
             newContain[6] = contains[7];
             newContain[7] = contains[8];
             newContain[8] = contains[22];
+            newContain[9] = contains[11];
             switch(newContain[6]){
                 case 'alexol':
                     data[0][3][data[0][3].length] = newContain;
@@ -719,6 +791,7 @@ function getStCSV(){
             newContain[6] = contains[7];
             newContain[7] = contains[8];
             newContain[8] = contains[22];
+            newContain[9] = contains[11];
             switch(newContain[6]){
                 case 'alex':
                     data[1][3][data[1][3].length] = newContain;

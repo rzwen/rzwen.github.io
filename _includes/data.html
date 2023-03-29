@@ -55,6 +55,13 @@
                 <p>Here we provide a plot of index size against lookup latency on GRE data. Indexes can be added and removed from the plot using the corresponding buttons on the leaderboard. Noted that in maximun there can be up to 7 plots presented</p>
                 <button onclick="draw()">Rerender Plots</button>
                 <div id="plotParent"><canvas id="plots" class="chart" style="width:80%"></canvas></div>
+                <h4>Other Plots You may interest:</h4>
+                <p>1. Multi-threading scalability:</p>
+                <p>Dataset: <select id="dataset1" onchange="drawCores()"> 
+                </select>, Read Ratio: <select id="ReadRatio" onchange="drawCores()"><option value="Read Only" selected>Read Only</option>
+                <option value="Balance">Balance</option>
+                <option value="Write Only">Write Only</option></select></p>
+                <div id="cores"><canvas id="coresPlots" class="chart" style="width:80%"></canvas></div>
             </div>
         </div>
     </div>
