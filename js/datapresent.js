@@ -381,7 +381,7 @@ function getLineData(index,stand,dataset){
                     num+=1;
                 }
             }
-            var kg = (tmp/num)/1000000
+            var kg = (tmp/num)/1000000;
             ttt.data[ttt.data.length]=kg.toFixed(3);
         }
     return ttt
