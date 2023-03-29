@@ -2,4 +2,4 @@
 {"name":"Artunsync","type":"Trad","present":"false","plot":"false","heatmap":"rgb(255,0,255)","site":""},
 {"name":"XIndex","type":"Learn","present":"false","plot":"false","heatmap":"rgb(225,171,0)","site":""},
 {"name":"Finedex","type":"Learn","present":"true","plot":"false","heatmap":"rgb(102,102,0)","site":""},
-{"name":"massTree","type":"Trad","present":"false","plot":"false","heatmap":"rgb(225,171,0)","site":""},{"name":"PGM","type":"Learn","present":"false","plot":"false","heatmap":"rgb(125,0,255)","site":""}]
+{"name":"massTree","type":"Trad","present":"false","plot":"false","heatmap":"rgb(171,171,0)","site":""},{"name":"PGM","type":"Learn","present":"false","plot":"false","heatmap":"rgb(125,0,255)","site":""}]

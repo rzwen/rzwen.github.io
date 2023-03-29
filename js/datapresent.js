@@ -10,6 +10,15 @@ let sortOr = [true,true,true,true,true,true]
 let data = [];
 data[0] = []; //store mt
 data[1] = []; //store st
+
+let memory = [];
+memory[0] = []; //alex
+memory[1] = []; //lipp
+memory[2] = []; //pgm
+memory[3] = []; //art
+memory[4] = []; //btree
+memory[5] = []; //hot
+
 let readradio = [1,0.8,0.5,0.2,0];
 
 let heatmap=[]
@@ -231,6 +240,7 @@ function generate(){
     document.getElementById("latencyTable").appendChild(tbody);
     draw();
     drawCores();
+    drawMem();
 }
 
 //show the datasetList
@@ -472,6 +482,87 @@ function drawCores(){
                     scaleLabel: {
                       display: true,
                       labelString: 'Cores'
+                    }
+                  }]
+              }
+        }
+    });
+}
+
+function getLineDataMem(dataset){
+    var ttt = [];
+    for(let index =0;index<6; index++){
+        let tmp = 0;
+        let num = 0;
+        for(let j in new Array(memory[index].length).fill(1)){
+            if(memory[index][j][0].indexOf(dataset)==-1){
+                continue;
+            }
+            tmp+=parseInt(memory[index][j][2]);
+            num+=1;
+        }
+        ttt[ttt.length]=parseInt(tmp/num);
+    }
+    return ttt;
+}
+
+function drawMem(){
+    document.getElementById('memory') && document.getElementById('memory').removeChild(document.getElementById('memoryPlots'));
+    var ctx = document.createElement('canvas');
+    ctx.id = 'memoryPlots';
+    ctx.className = 'chart';
+    document.getElementById('memory') && document.getElementById('memory').appendChild(ctx);
+    let tt = document.getElementById("dataset2").value;
+    let labell = ["ALEX", "LIPP","PGM","Artunsync", "BTree", "HOT"];
+    let data = {
+        labels: labell,
+        datasets: [{
+          label: 'My First Dataset',
+          data: getLineDataMem(tt),
+          backgroundColor: [
+            'rgba(0,0,255,0.6)',
+            'rgba(255,0,0,0.6)',
+            'rgba(125,0,255,0.6)',
+            'rgba(255,0,255,0.6)',
+            'rgba(0,255,0,0.6)',
+            'rgba(255,255,0,0.6)'
+          ],
+          borderColor: [
+            'rgb(0,0,255)',
+            'rgb(255,0,0)',
+            'rgb(125,0,255)',
+            'rgb(255,0,255)',
+            'rgb(0,255,0)',
+            'rgb(255,255,0)'
+          ],
+          borderWidth: 0.7
+        }]
+      };
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            title: {
+            display: true,
+            text: tt
+            },
+            legend:{
+                postion: 'right'
+            },
+            scales: {
+                yAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Size (GB)',
+                  },
+                  ticks: {
+                    beginAtZero:true
+                }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Indexes'
                     }
                   }]
               }
@@ -833,10 +924,49 @@ function getStCSV(){
 
 // when load the page, read indexList from file, then generate table and plots 
 
+function getMemory(){
+    fetch('./data/mem_new.csv')
+    .then(res => res.text())
+    .then(txt => {
+        var lines = txt.split(/[(\r\n)\r\n]+/);
+        for(let i in new Array(lines.length).fill(1)){
+            if(i==0){
+                continue;
+            }
+            var contains = lines[i].split(',');
+            var newContain = [];
+            newContain[0] = contains[6];
+            newContain[1] = contains[7];
+            newContain[2] = contains[10];
+            newContain[3] = contains[22];
+            switch(newContain[1]){
+                case 'alex':
+                    memory[0][memory[0].length] = newContain;
+                    break;
+                case 'btree':
+                    memory[4][memory[4].length]=newContain;
+                    break;
+                case 'hot':
+                    memory[5][memory[5].length]=newContain;
+                    break;
+                case 'artunsync':
+                    memory[3][memory[3].length]=newContain;
+                    break;
+                case 'lipp':
+                    memory[1][memory[1].length]=newContain;
+                    break;
+                case 'pgm':
+                    memory[2][memory[2].length]=newContain;
+            }
+        }
+    });
+}
+
 async function myFunction(){
     await getDatasetList();
     await getIndexes();
     await getMtCSV();
+    await getMemory();
     getStCSV();
     Myfunction();
 }

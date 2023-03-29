@@ -189,6 +189,20 @@
         <option value="Balance">Balance</option>
         <option value="Write Only">Write Only</option></select></p>
         <div id="cores"><canvas id="coresPlots" class="chart" style="width:80%"></canvas></div>
+        <p>2. Memory Space Efficiency:</p>
+                <p>Dataset:s <select id="dataset2" onchange="drawMem()"> 
+                    <option value="covid" selected>covid</option>
+                    <option value="biology">biology</option>
+                    <option value="libraries">libraries</option>
+                    <option value="planet_features">planet_features</option>
+                    <option value="wise_all_sky_data">wise_all_sky_data</option>
+                    <option value="books">books</option>
+                    <option value="fb">fb</option>
+                    <option value="stovf_vote_id">stovf_vote_id</option>
+                    <option value="history">history</option>
+                    <option value="osm_cellids">osm_cellids</option>
+                </select></p>
+                <div id="memory"><canvas id="memoryPlots" class="chart" style="width:60%"></canvas></div>
     </div>
     <script src="/js/3-js/three.min.js"></script>
     <script src="/js/3-js/OrbitControls.js"></script>
