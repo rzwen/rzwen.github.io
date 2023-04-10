@@ -2,7 +2,6 @@ let uploadedResult = [];
 
 function getFile(){
     const Name = document.getElementById("UserName").value;
-    const Email = document.getElementById("EmailAdd").value;
     const Docker = document.getElementById("dockerImage").value;
     const uploadFileEle = document.getElementById("textResult");
     const uploadFileEle2 = document.getElementById("indexfile");
@@ -10,7 +9,6 @@ function getFile(){
     const time =date.getFullYear()+'_'+(date.getMonth()+1)+'_'+date.getDate()+'_'+date.getHours()+'_'+date.getMinutes();
     const t = {
         "name":Name,
-        "email": Email,
         "docker":Docker,
         "test":'./data/'+Name+'/'+time+'/'+uploadFileEle.files[0].name,
         "index":'./data/'+Name+'/'+time+'/'+uploadFileEle2.files[0].name,
