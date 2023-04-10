@@ -3,33 +3,41 @@
         <div class="download-section">
             <div class="container">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h2>Download Data&Index</h2>
+                    <h2>Download & Test</h2>
                     <p>You can download the testing program and indexes freely</p>
-                    <a href="https://hub.docker.com/repository/docker/haitongxu635/gre/general" target="_blank" class="btn-default btn-lg">Download Docker Here</a>
+                    <a href="https://hub.docker.com/repository/docker/haitongxu635/gre/general" target="_blank" class="btn-default btn-lg">Get Docker Here</a>
                 </div>
             </div>
         </div>
         <div class="down-section">
             <div class="container">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h2>Upload Your Index, Test Result and Docker image here</h2>
-                    <p>Please Don't Change Anything beside Asked in readme, otherwise your result will be rejected</p>
-                    <table id="UserInput">
-                        <tr>
-                            <td>Your Name</td>
-                            <td>Your Docker URL</td>
-                            <td>Your Test Result</td>
-                            <td>Your Index</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input id="UserName" type="text"></td>
-                            <td><input id="dockerImage" type="url"></td>
-                            <td><input id="textResult" type="file"></td>
-                            <td><input id="indexfile" type="file"></td>
-                            <td><input onclick="getFile()" type="submit"/></td>
-                        </tr>
-                    </table>
+                    <h2>Upload</h2>
+                    <p>Send us an email to give back your own test result and your testing docker</p>
+                    <p>Please Don't Change Anything beside Asked, otherwise your result will be rejected</p>
+                    <form action="mailto:rzwen5137@gmail.com" method="post" enctype="text/plain">
+                        <table id="UserInput">
+                            <tr>
+                                <td>Your Name</td>
+                               <td>Your Email</td>
+                                <td>Your Docker URL</td>
+                                <td>Your Test Result</td>
+                                <td>Your Index</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>FirstName: <input type="text" name="FirstName"></td>
+                                <td>Email: <input type="text" name="Email"></td>
+                                <td><input id="dockerImage" type="url"></td>
+                                <td><input id="textResult" type="file"></td>
+                                <td><input id="indexfile" type="file"></td>
+                                <td><input onclick="getFile()" type="submit"/></td>
+                                <td><input type="submit" name="submit" value="Submit"></td>
+                            </tr>
+                        </table>
+                      </form>
+                   
                 </div>
             </div>
         </div>
