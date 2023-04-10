@@ -5,7 +5,49 @@
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>Download Data&Index</h2>
                     <p>You can download the testing program and indexes freely</p>
-                    <a href="https://hub.docker.com/repository/docker/haitongxu635/gre/general" target="_blank" btn-default btn-lg">Download Docker Here</a>
+                    <a href="https://hub.docker.com/repository/docker/haitongxu635/gre/general" target="_blank" class="btn-default btn-lg">Download Docker Here</a>
+                </div>
+            </div>
+        </div>
+        <div class="down-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Upload Your Index, Test Result and Docker image here</h2>
+                    <p>Please Don't Change Anything beside Asked in readme, otherwise your result will be rejected</p>
+                    <table id="UserInput">
+                        <tr>
+                            <td>Your Name</td>
+                            <td>Your Docker URL</td>
+                            <td>Your Test Result</td>
+                            <td>Your Index</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input id="UserName" type="text"></td>
+                            <td><input id="dockerImage" type="url"></td>
+                            <td><input id="textResult" type="file"></td>
+                            <td><input id="indexfile" type="file"></td>
+                            <td><input onclick="getFile()" type="submit"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="up-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Uploaded Test Result</h2>
+                    <table id="upload" style="border: 1px solid;">
+                        <thead>
+                            <tr>
+                                <td style="width:20%">Name</td>
+                                <td style="width:20%">Docker URL</td>
+                                <td style="width:20%">Test Result</td>
+                                <td style="width:20%">Index</td>
+                                <td style="width:20%">Time</td>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
