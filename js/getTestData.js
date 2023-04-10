@@ -18,6 +18,7 @@ function getFile(){
     };
     uploadedResult[uploadedResult.length] = t ;
     console.log(t);
+    console.log(length(uploadFileEle.files));
     var reader = new FileReader();
     reader.readAsText(uploadFileEle.files[0]);
     reader.onerror = function(){
