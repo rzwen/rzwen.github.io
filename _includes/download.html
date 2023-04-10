@@ -15,7 +15,6 @@
                     <h2>Upload</h2>
                     <p>Send us an email to give back your own test result and your testing docker</p>
                     <p>Please Don't Change Anything beside Asked, otherwise your result will be rejected</p>
-                    <form action="mailto:rzwen5137@gmail.com" method="post" enctype="text/plain">
                         <table id="UserInput">
                             <tr>
                                 <td>Your Name</td>
@@ -24,20 +23,16 @@
                                 <td>Your Test Result</td>
                                 <td>Your Index</td>
                                 <td></td>
-                                <td></td>
                             </tr>
                             <tr>
-                                <td>FirstName: <input type="text" name="FirstName"></td>
-                                <td>Email: <input type="text" name="Email"></td>
+                                <td><input id="UserName" type="text"></td>
+                                <td><input id="EmailAdd" type="email" name="Email"></td>
                                 <td><input id="dockerImage" type="url"></td>
                                 <td><input id="textResult" type="file"></td>
                                 <td><input id="indexfile" type="file"></td>
                                 <td><input onclick="getFile()" type="submit"/></td>
-                                <td><input type="submit" name="submit" value="Submit"></td>
                             </tr>
-                        </table>
-                      </form>
-                   
+                        </table>          
                 </div>
             </div>
         </div>

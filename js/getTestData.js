@@ -2,6 +2,7 @@ let uploadedResult = [];
 
 function getFile(){
     const Name = document.getElementById("UserName").value;
+    const Email = document.getElementById("EmailAdd").value;
     const Docker = document.getElementById("dockerImage").value;
     const uploadFileEle = document.getElementById("textResult");
     const uploadFileEle2 = document.getElementById("indexfile");
@@ -9,6 +10,7 @@ function getFile(){
     const time =date.getFullYear()+'_'+(date.getMonth()+1)+'_'+date.getDate()+'_'+date.getHours()+'_'+date.getMinutes();
     const t = {
         "name":Name,
+        "email": Email,
         "docker":Docker,
         "test":'./data/'+Name+'/'+time+'/'+uploadFileEle.files[0].name,
         "index":'./data/'+Name+'/'+time+'/'+uploadFileEle2.files[0].name,
@@ -22,7 +24,7 @@ function getFile(){
        alert(reader.error);
     }
     reader.onload = function(){
-        savefile('./data/'+Name+'/'+time+'/'+uploadFileEle.files[0].name,reader.result);
+        //savefile('./data/'+Name+'/'+time+'/'+uploadFileEle.files[0].name,reader.result);
     }
     var reader2 = new FileReader();
     reader2.readAsText(uploadFileEle2.files[0]);
@@ -30,9 +32,10 @@ function getFile(){
         alert(reader.error);
      }
      reader2.onload = function(){
-         savefile('./data/'+Name+'/'+time+'/'+uploadFileEle2.files[0].name,reader2.result);
+         //savefile('./data/'+Name+'/'+time+'/'+uploadFileEle2.files[0].name,reader2.result);
      }
-     savefile('./data/uploadedTestResult.txt',JSON.stringify(uploadedResult));
+     
+     //savefile('./data/uploadedTestResult.txt',JSON.stringify(uploadedResult));
 }
 
 
