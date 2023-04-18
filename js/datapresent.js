@@ -734,7 +734,7 @@ function getColor(Learn,Traditional){
 function generateHeatMap(){
     var ele = document.getElementById('tt');
     ele.innerHTML='';
-    w = window.innerWidth*0.55;
+    w = window.innerWidth*0.5;
     h = window.innerHeight*0.8;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, w/h, 0.1 , 100000);
