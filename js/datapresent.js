@@ -152,6 +152,7 @@ function save(){
 //generate one line of the leaderboard
 function newRow1(i,stand,dataset){
     let res = '<td>Plot<br><div id = "plot'+ i;
+    
     if(showenPlots.includes(Number(i))){
         res = res + '"><button onClick="removePlot('+i+')">Remove</button></div></td>';
     }
@@ -173,7 +174,7 @@ function newRow1(i,stand,dataset){
             if(data[stand][i][j][5].indexOf(dataset)==-1){
                 continue;
             }
-            if(stand==0&&data[stand][index][j][9]!='24'){
+            if(stand==0&&data[stand][i][j][9]!='24'){
                 continue;
             }
             if(Math.abs(data[stand][i][j][0]-readradio[radio])<0.001){
@@ -806,7 +807,6 @@ function generateHeatMap(){
                         break;
                     default:
                         geometry =new THREE.CylinderGeometry( 0.15, 0.15, 0.3,100 );
-                        console.log("others");
                 }
                 
                 var material = new THREE.MeshLambertMaterial( { color: color } );
