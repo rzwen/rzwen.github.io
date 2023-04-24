@@ -573,7 +573,7 @@ function drawMem(){
                 yAxes: [{
                   scaleLabel: {
                     display: true,
-                    labelString: 'Size (GB)',
+                    labelString: 'Memory Space Used (GB)',
                   },
                   ticks: {
                     beginAtZero:true
