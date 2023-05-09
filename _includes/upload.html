@@ -1,0 +1,97 @@
+    <!-- Download Section -->
+    <section id="upload" class="content-section text-center">
+        <p>After testing in the given docker and make sure that you have get the valid result, you can choose the inform us either through email or upload the file to our server.</p>
+        <div class="down-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Upload by email</h2>
+                    <p>Send us an email by <a href="mailto:greindexbenchmarking@gmail.com?subject=New Test Result from {your name} &body=Docker URL: {yourtestdocker}%0D%0ADo not forget to attach the test result(CSV) and your index!">this</a> to give back your own test result and your testing docker</p>
+                    <p>Email Example:</p><img src="../img/Email-example.png">
+                    <p>Please Don't Change Anything beside Asked, otherwise your result will be rejected</p>         
+                </div>
+            </div>
+        </div>
+        <div class="up-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Submit to our server</h2>
+                    <form action="http://localhost:3000/uploads" method="post">
+
+                    <label for="uploaderName">User name</label>
+                    <input type="text" id="uploaderName" name="uploaderName">
+                    <br>
+                    
+                    <label for="uploaderEmail">Email</label>
+                    <input type="email" id="uploaderEmail" name="uploaderEmail">
+                    <br>
+                    
+                    <label for="uploadedIndex">Index Name</label>
+                    <input type="text" id="uploadedIndex" name="uploadedIndex">
+                    <br>
+                    
+                    <label for="indexFile">Index File</label>
+                    <input type="File" id="indexFile" name="indexFile">
+                    <br>
+                    
+                    <label for="comFile">Compeditor File</label>
+                    <input type="File" id="comFile" name="comFile">
+                    <br>
+                    
+                    <input type="submit">
+                    </form>
+                    
+                    <script>
+                        const form = document.querySelector('form');
+                        console.log(form);
+                        form.addEventListener('submit', (e) => {
+                            
+                            e.preventDefault();
+                            // Prevents HTML handling submission
+                            const name = document.getElementById("uploaderName");
+                            const email = document.getElementById("uploaderEmail");
+                            const index = document.getElementById("uploadedIndex");
+                            const indexFile = document.getElementById("indexFile");
+                            const comFile = document.getElementById("comFile");
+                            const formData = new FormData();
+                            // Creates empty formData object
+                            formData.append("uploaderName", name.value);
+                            formData.append("uploaderEmail", email.value);
+                            formData.append("uploadedIndex", index.value);
+                            // Appends value of text input
+                            formData.append("files", indexFile.files[0]);
+                            formData.append("files", comFile.files[0]);
+                    
+                            console.log(...formData);
+                    
+                            // Appends value(s) of file input
+                            // Post data to Node and Express server:
+                            fetch('http://localhost:3000/uploads', {
+                                method: 'POST',
+                                body: formData, // Payload is formData object
+                            })
+                            .then(res => res.json())
+                            .then(data => console.log(data));
+                        })
+                    </script>         
+                </div>
+            </div>
+        </div>
+        <div class="up-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Uploaded Test Result</h2>
+                    <table id="upload" style="border: 1px solid;">
+                        <thead>
+                            <tr>
+                                <td style="width:20%">Name</td>
+                                <td style="width:20%">Docker URL</td>
+                                <td style="width:20%">Test Result</td>
+                                <td style="width:20%">Index</td>
+                                <td style="width:20%">Time</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
